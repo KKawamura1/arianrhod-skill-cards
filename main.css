@@ -1,7 +1,8 @@
 body {
     font-size: 1em;
     font-family: "Microsoft Sans serif", sans-serif;
-    letter-spacing: -0.03em;
+    letter-spacing: 0.02em;
+    font-feature-settings: "palt";
 }
 
 .cards-container {
@@ -40,7 +41,7 @@ body {
     font-family: 'ヒラギノ角ゴ StdN', 'Hiragino Kaku Gothic StdN', sans-serif;
     font-weight: normal;
     font-size: 1.7em;
-    letter-spacing: -0.06em;
+    /* letter-spacing: -0.06em; */
     margin-block-start: 0em;
     margin-block-end: 0em;
     margin-inline-start: 0em;
