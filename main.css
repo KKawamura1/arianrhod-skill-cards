@@ -4,8 +4,18 @@ body {
     letter-spacing: -0.03em;
 }
 
+.cards-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 .card-outline-box {
-    width: 18.7em;
+    width: 18em;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    margin-right: 3em;
+    margin-left: 1em;
 }
 
 .card-title-box,
@@ -29,7 +39,7 @@ body {
 .card-title-box h2 {
     font-family: 'ヒラギノ角ゴ StdN', 'Hiragino Kaku Gothic StdN', sans-serif;
     font-weight: normal;
-    font-size: 1.8em;
+    font-size: 1.7em;
     letter-spacing: -0.06em;
     margin-block-start: 0em;
     margin-block-end: 0em;
@@ -38,7 +48,7 @@ body {
 }
 
 .card-main-box {
-    height: 20em;
+    height: 22em;
     border-bottom-left-radius: 1em;
     border-bottom-right-radius: 1em;
     border-top-style: none;
