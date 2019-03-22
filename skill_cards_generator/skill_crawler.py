@@ -14,6 +14,27 @@ skill_area_end_regex = re.compile(r'^■コネクション■\s*$', re.MULTILINE
 
 replace_text_slash = '___SLASH___'
 
+timing_unify_table = {
+    'セットアッププロセス': ('セットアップ', 'setup', 'sup', 'set'),
+    'イニシアチブプロセス': ('イニシアチブ', 'init', 'ini', 'in'),
+    'ムーブアクション': ('ムーブ', 'move', 'mov', 'mv'),
+    'マイナーアクション': ('マイナー', 'minor', 'mnr', 'mn'),
+    'メジャーアクション': ('メジャー', 'major', 'maj', 'mjr', 'mj'),
+    'クリンナッププロセス': ('クリンナップ', 'クリナップ', 'クリナッププロセス', 'clean', 'cup', 'c'),
+    'ダメージロールの直前': ('ダメージロール直前', 'DR直前', 'bdr', 'bfdr'),
+    'ダメージロールの直後': ('ダメージロール直後', 'DR直後', 'adr', 'afdr'),
+    '判定の直前': ('判定直前', 'bfjg', 'bjd', 'br'),
+    '判定の直後': ('判定直後', 'afjg', 'ajd', 'ar'),
+}
+
+
+def unify_timing(timing: str) -> str:
+    for target, candidates in timing_unify_table.items():
+        for candidate in candidates:
+            if mojimoji.zen_to_han(timing).lower() == mojimoji.zen_to_han(candidate).lower():
+                return target
+    return timing
+
 
 def make_skill_from_text(text: str) -> Optional[Skill]:
     match = skill_regex.fullmatch(text)
@@ -31,7 +52,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
         sl = 1
     if 7 <= sl <= 9:
         sl -= 5
-    timing = match.group(3)
+    timing = unify_timing(match.group(3))
     judge = match.group(4)
     target = match.group(5)
     skill_range_str = match.group(6)
