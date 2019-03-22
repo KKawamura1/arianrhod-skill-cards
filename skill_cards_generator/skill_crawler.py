@@ -11,6 +11,8 @@ skill_regex = re.compile(
 skill_area_begin_regex = re.compile(r'^■スキル■\s*$', re.MULTILINE)
 skill_area_end_regex = re.compile(r'^■コネクション■\s*$', re.MULTILINE)
 
+replace_text_slash = '___SLASH___'
+
 
 def make_skill_from_text(text: str) -> Optional[Skill]:
     match = skill_regex.fullmatch(text)
@@ -22,6 +24,8 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
         sl = int(sl_str)
     except ValueError:
         sl = 1
+    if 7 <= sl <= 9:
+        sl -= 5
     timing = match.group(3)
     judge = match.group(4)
     target = match.group(5)
@@ -64,12 +68,25 @@ def make_skills_from_charasheet(sheet: str) -> List[Skill]:
         end = len(sheet)
     sheet = sheet[begin:end]
 
+    # Escape slashes like '1/Sn', 'SL/Sr', and so on
+    check_set_before = set([str(i) for i in range(20)] + ['sl', 'SL'])
+    check_set_after = set(['sn', 'sr', 'Sn', 'Sr'])
+    for b in check_set_before:
+        for a in check_set_after:
+            sheet.replace(f'{b}/{a}', f'{b}{replace_text_slash}{a}')
+
     # Check lines
     skills = []
     for line in sheet.split('\n'):
         skill = make_skill_from_text(line)
         if skill is not None:
             skills.append(skill)
+
+    # Repair escaped slash
+    for skill in skills:
+        if skill.usage_limitation is not None:
+            skill.usage_limitation = skill.usage_limitation.replace(
+                replace_text_slash, '/')
     return skills
 
 
