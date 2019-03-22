@@ -1,6 +1,7 @@
 import re
 from typing import Optional, List
 from sys import stdin
+import mojimoji
 from .skill import Skill
 from .skill_range import SkillRange
 from .html_generator import generate_html
@@ -89,6 +90,9 @@ def make_skills_from_charasheet(sheet: str) -> List[Skill]:
         for a in check_set_after:
             sheet = sheet.replace(f'{b}/{a}', f'{b}{replace_text_slash}{a}')
 
+    # Zenkakify all Kana characters
+    sheet = mojimoji.han_to_zen(sheet, digit=False, ascii=False)
+
     # Check lines
     skills = []
     for line in sheet.split('\n'):
@@ -101,6 +105,18 @@ def make_skills_from_charasheet(sheet: str) -> List[Skill]:
         if skill.usage_limitation is not None:
             skill.usage_limitation = skill.usage_limitation.replace(
                 replace_text_slash, '/')
+
+    # Unify Times symbol
+    origin = ['*', '＊']
+    target = '×'
+    for skill in skills:
+        for o in origin:
+            skill.effect = skill.effect.replace(o, target)
+
+    # Zenkakify characters in effect area
+    for skill in skills:
+        skill.effect = mojimoji.han_to_zen(skill.effect, digit=False)
+
     return skills
 
 
