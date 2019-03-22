@@ -19,6 +19,10 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
     if match is None:
         return None
     name = match.group(1)
+    if name == 'スキル名':
+        return None
+    elif name[0] == name[-1] == '■':
+        return None
     sl_str = match.group(2)
     try:
         sl = int(sl_str)
