@@ -34,8 +34,8 @@ def generate_html(skills: Sequence[Skill]) -> str:
                                     class_name_len = 0
                                 skill_name_len = len(skill.name)
                                 maximum_width = 20.0
-                                class_size = 1.1
-                                skill_size = 1.7
+                                class_size = 1.2
+                                skill_size = 1.8
                                 if (class_size * class_name_len
                                         + skill_size * skill_name_len
                                         > maximum_width):
@@ -62,12 +62,12 @@ def generate_html(skills: Sequence[Skill]) -> str:
                                     line('p', skill.cost, klass='skill-cost')
                                 else:
                                     line('p', 'ー', klass='skill-cost')
-                            if skill.level_above is not None:
-                                line('p', skill.level_above,
-                                     klass='skill-level-bound')
                             if skill.level_now is not None:
                                 line('p', skill.level_now,
                                      klass='skill-level-now')
+                            if skill.level_above is not None:
+                                line('p', skill.level_above,
+                                     klass='skill-level-bound')
                             line('p', skill.usage_limitation,
                                  klass='limitation')
                             line('p', skill.effect, klass='effect')
