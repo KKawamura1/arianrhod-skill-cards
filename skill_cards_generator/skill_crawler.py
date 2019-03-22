@@ -73,7 +73,7 @@ def make_skills_from_charasheet(sheet: str) -> List[Skill]:
     check_set_after = set(['sn', 'sr', 'Sn', 'Sr'])
     for b in check_set_before:
         for a in check_set_after:
-            sheet.replace(f'{b}/{a}', f'{b}{replace_text_slash}{a}')
+            sheet = sheet.replace(f'{b}/{a}', f'{b}{replace_text_slash}{a}')
 
     # Check lines
     skills = []
