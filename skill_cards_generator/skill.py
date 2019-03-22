@@ -14,7 +14,7 @@ class Skill:
     skill_range: Optional[SkillRange]
     cost: Optional[int]
     level_above: int
-    usage_limitation: Optional[str]
+    usage_limitation: str
     effect: str
     skill_class: Optional[str] = field(default=None)
     critical: Optional[str] = field(default=None)
