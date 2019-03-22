@@ -11,7 +11,7 @@ class Skill:
     timing: str
     judge: str
     target: str
-    skill_range: Optional[SkillRange]
+    skill_range: SkillRange
     cost: Optional[int]
     level_above: int
     usage_limitation: str
