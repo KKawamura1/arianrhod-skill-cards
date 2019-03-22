@@ -26,7 +26,30 @@ def generate_html(skills: Sequence[Skill]) -> str:
                             if skill.skill_class is not None:
                                 line('h3', skill.skill_class,
                                      klass='skill-class')
-                            line('h2', skill.name, klass='skill-name')
+                            # Name with auto-smallening
+                            with tag('h2', klass='skill-name'):
+                                if skill.skill_class is not None:
+                                    class_name_len = len(skill.skill_class)
+                                else:
+                                    class_name_len = 0
+                                skill_name_len = len(skill.name)
+                                maximum_width = 20.0
+                                class_size = 1.1
+                                skill_size = 1.7
+                                if (class_size * class_name_len
+                                        + skill_size * skill_name_len
+                                        > maximum_width):
+                                    # Need to smallen
+                                    remaining_space = (maximum_width
+                                                       - class_size * class_name_len)
+                                    per_one_char = remaining_space / skill_name_len
+                                    decrease = skill_size - per_one_char
+                                    new_size = max(
+                                        skill_size - decrease * 0.6, 1.2)
+                                    spacing = max(-decrease * 0.4, -0.3)
+                                    doc.attr(style=(f'font-size: {new_size}em; '
+                                                    f'letter-spacing: {spacing}em;'))
+                                text(skill.name)
                         with tag('div', klass='card-main-box'):
                             line('p', skill.timing, klass='timing')
                             with tag('div', klass='inner-horizontal-box'):
