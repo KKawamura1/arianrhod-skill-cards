@@ -128,6 +128,11 @@ p.skill-level-bound::before {
     font-weight: bold;
 }
 
+p.skill-level-now::before {
+    content: "ＳＬ：";
+    font-weight: bold;
+}
+
 p.limitation::before {
     content: "使用条件：";
     font-weight: bold;

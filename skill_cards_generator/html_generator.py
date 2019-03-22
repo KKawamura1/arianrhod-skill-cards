@@ -62,8 +62,12 @@ def generate_html(skills: Sequence[Skill]) -> str:
                                     line('p', skill.cost, klass='skill-cost')
                                 else:
                                     line('p', 'ー', klass='skill-cost')
-                            line('p', skill.level_above,
-                                 klass='skill-level-bound')
+                            if skill.level_above is not None:
+                                line('p', skill.level_above,
+                                     klass='skill-level-bound')
+                            if skill.level_now is not None:
+                                line('p', skill.level_now,
+                                     klass='skill-level-now')
                             line('p', skill.usage_limitation,
                                  klass='limitation')
                             line('p', skill.effect, klass='effect')
