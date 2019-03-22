@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import enum
 from dataclasses import dataclass
 
@@ -34,6 +36,10 @@ class SkillRange:
         self._kind = kind
         self._value = value
         self._unit = unit
+
+    @staticmethod
+    def from_text(text: str) -> SkillRange:
+        return SkillRange(SkillRangeKind.with_unit, 0)
 
     def __str__(self):
         if self._kind is SkillRangeKind.nothing:

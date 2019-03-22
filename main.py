@@ -1,4 +1,4 @@
-from skill_cards_generator.html_generator import main
+from skill_cards_generator.skill_crawler import main
 
 if __name__ == "__main__":
     main()
