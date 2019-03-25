@@ -14,7 +14,7 @@ skill_area_end_regex = re.compile(r'^■コネクション■\s*$', re.MULTILINE
 
 replace_text_slash = '___SLASH___'
 
-timing_unify_table = {
+keyword_unify_table = {
     'セットアッププロセス': ('セットアップ', 'setup', 'sup', 'set'),
     'イニシアチブプロセス': ('イニシアチブ', 'init', 'ini', 'in'),
     'ムーブアクション': ('ムーブ', 'move', 'mov', 'mv'),
@@ -27,15 +27,42 @@ timing_unify_table = {
     '判定の直後': ('判定直後', 'afjg', 'ajd', 'ar'),
     'パッシブ': ('パッシヴ', 'pv', 'passive', 'pass', 'pas'),
     '戦闘前': {'bco', 'bfbtl'},
+    'シーン': {'sn', 'scene', 'scn'},
+    'シナリオ': {'シナ', 'sr', 'scenario'},
+    'メインプロセス': {'mp', 'mainprocess', 'main process'},
 }
 
 
-def unify_timing(timing: str) -> str:
-    for target, candidates in timing_unify_table.items():
+def unify_keyword(word: str) -> str:
+    for target, candidates in keyword_unify_table.items():
         for candidate in candidates:
-            if mojimoji.zen_to_han(timing).lower() == mojimoji.zen_to_han(candidate).lower():
+            if (mojimoji.zen_to_han(word).lower()
+                    == mojimoji.zen_to_han(candidate).lower()):
                 return target
-    return timing
+    return word
+
+
+def unify_timing(timing: str) -> str:
+    return unify_keyword(timing)
+
+
+def unify_limitation(limitation: str) -> Optional[str]:
+    def unify_limitation_with_one_word(word: str) -> str:
+        slash_separated = word.split('/')
+        if len(slash_separated) == 2:
+            return f'{unify_keyword(slash_separated[1])}{slash_separated[0]}回'
+        return word
+
+    limitation_str = limitation.replace(replace_text_slash, '/')
+    result = []
+    for limitation_spaced in limitation_str.split():
+        for limitation_sep in limitation_spaced.split(','):
+            if len(limitation_sep) == 0:
+                continue
+            result.append(unify_limitation_with_one_word(limitation_sep))
+    if len(result) == 0:
+        return None
+    return '、'.join(result)
 
 
 def make_skill_from_text(text: str) -> Optional[Skill]:
@@ -43,7 +70,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
     if match is None:
         return None
     name = match.group(1)
-    if name == 'スキル名':
+    if name in ('スキル名', '一般スキル'):
         return None
     elif name[0] == name[-1] == '■':
         return None
@@ -76,6 +103,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
             limitation = ''
         except ValueError:
             pass
+    limitation = unify_limitation(limitation)
     effect = match.group(9)
     return Skill(
         name=name,
