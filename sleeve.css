@@ -33,14 +33,14 @@ p {
 }
 
 .card-outline-box {
-    width: 94.0mm;
+    width: 96.0mm;
     margin-top: 0mm;
     margin-bottom: 0mm;
     margin-right: 0mm;
     margin-left: 0mm;
     background-color: #202020;
     border-radius: 4.0mm;
-    padding: 4mm;
+    padding: 5mm;
 }
 
 .card-title-box,
