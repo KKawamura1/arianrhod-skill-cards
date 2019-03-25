@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Optional
 from .skill_range import SkillRange
+from .judge import Judge
 
 
 @dataclass
@@ -9,7 +10,7 @@ class Skill:
 
     name: str
     timing: str
-    judge: str
+    judge: Judge
     target: str
     skill_range: SkillRange
     cost: Optional[int]

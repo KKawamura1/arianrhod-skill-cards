@@ -4,6 +4,7 @@ from sys import stdin
 import mojimoji
 from .skill import Skill
 from .skill_range import SkillRange
+from .judge import Judge
 from .html_generator import generate_html
 
 
@@ -83,7 +84,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
     if 7 <= sl <= 9:
         sl -= 5
     timing = unify_timing(match.group(3))
-    judge = match.group(4)
+    judge = Judge.from_text(match.group(4))
     target = match.group(5)
     skill_range_str = match.group(6)
     skill_range = SkillRange.from_text(skill_range_str)
