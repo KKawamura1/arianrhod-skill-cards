@@ -173,7 +173,7 @@ def make_skills_from_charasheet(sheet: str) -> List[Skill]:
     return skills
 
 
-def main(css_name: str = 'skill_book.css') -> None:
+def main(is_sleeve_mode: bool) -> None:
     input_text = stdin.read()
     skills = make_skills_from_charasheet(input_text)
-    print(generate_html(skills, css_name))
+    print(generate_html(skills, is_sleeve_mode))

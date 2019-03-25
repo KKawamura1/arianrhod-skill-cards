@@ -7,7 +7,4 @@ if __name__ == "__main__":
                         help='Print for sleeves.')
     params = parser.parse_args()
 
-    css_name = 'skill_book.css'
-    if params.sleeve:
-        css_name = 'sleeve.css'
-    main(css_name)
+    main(params.sleeve)

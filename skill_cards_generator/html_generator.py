@@ -7,7 +7,7 @@ from yattag import Doc, indent
 num_in_a_page = 9
 
 
-def generate_html(skills: Sequence[Skill], css_name: str) -> str:
+def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool) -> str:
     """Generate html file from given skills."""
 
     doc, tag, text, line = Doc().ttl()
@@ -19,6 +19,10 @@ def generate_html(skills: Sequence[Skill], css_name: str) -> str:
             line('title', 'Arianrhod Skill Cards')
             stag('meta', name='viewport',
                  content='width=device-width, initial-scale=1')
+            if is_sleeve_mode:
+                css_name = 'sleeve.css'
+            else:
+                css_name = 'skill_book.css'
             stag('link', rel='stylesheet', type='text/css', href=css_name)
         with tag('body'):
             for skill_id in range(0, len(skills), num_in_a_page):
@@ -37,6 +41,8 @@ def generate_html(skills: Sequence[Skill], css_name: str) -> str:
                                         class_name_len = 0
                                     skill_name_len = len(skill.name)
                                     maximum_width = 80
+                                    if is_sleeve_mode:
+                                        maximum_width = 65
                                     class_size = 5.2
                                     skill_size = 7.4
                                     if (class_size * class_name_len

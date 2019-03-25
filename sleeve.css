@@ -1,5 +1,5 @@
 body {
-    font-size: 4.94mm;
+    font-size: 4.5mm;
     font-family: "Microsoft Sans serif", sans-serif;
     letter-spacing: 0.0mm;
     font-feature-settings: "palt";
@@ -27,7 +27,7 @@ p {
     flex-wrap: wrap;
     justify-content: flex-start;
     padding-top: 39.5mm;
-    width: 364mm;
+    width: 420mm;
     padding-left: 28mm;
     page-break-after: always;
 }
@@ -38,34 +38,32 @@ p {
     margin-bottom: 7.5mm;
     margin-right: 3.5mm;
     margin-left: 3.5mm;
+    background-color: #202020;
+    border-radius: 4.0mm;
+    padding: 4mm;
 }
 
 .card-title-box,
 .card-main-box,
 .card-border {
     width: 100%;
-    border-style: solid;
-    border-width: 0.6mm;
     padding-left: 5.0mm;
     padding-right: 5.0mm;
 }
 
 .card-title-box {
-    height: 19.5mm;
-    border-top-left-radius: 6.0mm;
-    border-top-right-radius: 6.0mm;
-    border-bottom-style: none;
+    height: 15.0mm;
     margin-bottom: 0mm;
     background-color: gainsboro !important;
-    padding-top: 8.0mm;
-    padding-bottom: 1.5mm;
+    padding-top: 4.0mm;
+    padding-bottom: 1.0mm;
     display: flex;
     flex-direction: row-reverse;
     align-items: flex-end;
 }
 
 .card-border {
-    height: 1.0mm;
+    height: 2.0mm;
     width: 100%;
     background: linear-gradient(to bottom, gainsboro, white) !important;
     border-top-style: none;
@@ -98,18 +96,16 @@ p {
 }
 
 .card-main-box {
-    height: 113.5mm;
-    border-bottom-left-radius: 6.0mm;
-    border-bottom-right-radius: 6.0mm;
-    border-top-style: none;
+    height: 109.0mm;
     margin-top: 0mm;
-    padding-top: 4.0mm;
+    padding-top: 3.5mm;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
     align-content: stretch;
+    background-color: white !important;
 }
 
 .inner-horizontal-box {
@@ -178,5 +174,5 @@ p.flavor::before {
 }
 
 @page {
-    size: B4 portrait;
+    size: A4 portrait;
 }
