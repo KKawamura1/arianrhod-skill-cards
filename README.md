@@ -1,7 +1,7 @@
 Arianrhod Skill Card Generator
 ====
 
-Generate your skills like a official book.
+Generate your skills like an (arianrhod)[http://www.fear.co.jp/ari/] official book.
 
 ## Installation
 
