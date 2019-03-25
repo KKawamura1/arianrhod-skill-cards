@@ -33,9 +33,9 @@ def generate_html(skills: Sequence[Skill]) -> str:
                                 else:
                                     class_name_len = 0
                                 skill_name_len = len(skill.name)
-                                maximum_width = 20.0
-                                class_size = 1.2
-                                skill_size = 1.8
+                                maximum_width = 83.8
+                                class_size = 5.2
+                                skill_size = 7.4
                                 if (class_size * class_name_len
                                         + skill_size * skill_name_len
                                         > maximum_width):
@@ -47,8 +47,8 @@ def generate_html(skills: Sequence[Skill]) -> str:
                                     new_size = max(
                                         skill_size - decrease * 0.6, 1.2)
                                     spacing = max(-decrease * 0.4, -0.3)
-                                    doc.attr(style=(f'font-size: {new_size}em; '
-                                                    f'letter-spacing: {spacing}em;'))
+                                    doc.attr(style=(f'font-size: {new_size}mm; '
+                                                    f'letter-spacing: {spacing}mm;'))
                                 text(skill.name)
                         with tag('div', klass='card-main-box'):
                             line('p', skill.timing, klass='timing')
