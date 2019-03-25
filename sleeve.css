@@ -52,18 +52,18 @@ p {
 }
 
 .card-title-box {
-    height: 15.0mm;
+    height: 14.5mm;
     margin-bottom: 0mm;
     background-color: gainsboro !important;
     padding-top: 4.0mm;
-    padding-bottom: 1.0mm;
+    padding-bottom: 0.5mm;
     display: flex;
     flex-direction: row-reverse;
     align-items: flex-end;
 }
 
 .card-border {
-    height: 2.0mm;
+    height: 3.0mm;
     width: 100%;
     background: linear-gradient(to bottom, gainsboro, white) !important;
     border-top-style: none;
@@ -96,9 +96,9 @@ p {
 }
 
 .card-main-box {
-    height: 109.0mm;
+    height: 108.5mm;
     margin-top: 0mm;
-    padding-top: 3.5mm;
+    padding-top: 3.0mm;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
