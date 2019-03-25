@@ -6,6 +6,7 @@ from .skill import Skill
 from .skill_range import SkillRange
 from .judge import Judge
 from .html_generator import generate_html
+from .classifier import Classifier
 
 
 skill_regex = re.compile(
@@ -67,7 +68,16 @@ def unify_limitation(limitation: str) -> Optional[str]:
     return '、'.join(result)
 
 
-def split_classifier_from_effect(text: str) -> Tuple[]
+def split_classifier_from_effect(text: str) -> Tuple[Optional[Classifier], str]:
+    delimiter_index = text.find('。')
+    if delimiter_index != -1:
+        candidate = text[:delimiter_index]
+        classifier = Classifier.from_text(candidate)
+        if classifier is not None:
+            if len(text) <= delimiter_index + 1:
+                return classifier, ''
+            return classifier, text[delimiter_index + 1:]
+    return None, text
 
 
 def make_skill_from_text(text: str) -> Optional[Skill]:
@@ -109,7 +119,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
         except ValueError:
             pass
     limitation = unify_limitation(limitation)
-    effect = match.group(9)
+    classifier, effect = split_classifier_from_effect(match.group(9))
 
     return Skill(
         name=name,
@@ -120,6 +130,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
         skill_range=skill_range,
         cost=cost,
         usage_limitation=limitation,
+        skill_class=classifier,
         effect=effect,
         level_above=level_above
     )

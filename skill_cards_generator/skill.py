@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 from .skill_range import SkillRange
 from .judge import Judge
+from .classifier import Classifier
 
 
 @dataclass
@@ -16,7 +17,7 @@ class Skill:
     cost: Optional[int]
     usage_limitation: Optional[str]
     effect: str
-    skill_class: Optional[str] = field(default=None)
+    skill_class: Optional[Classifier] = field(default=None)
     level_above: Optional[int] = field(default=None)
     level_now: Optional[int] = field(default=None)
     critical: Optional[str] = field(default=None)
