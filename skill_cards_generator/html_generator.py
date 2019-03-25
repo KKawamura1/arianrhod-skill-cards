@@ -36,7 +36,7 @@ def generate_html(skills: Sequence[Skill]) -> str:
                                     else:
                                         class_name_len = 0
                                     skill_name_len = len(skill.name)
-                                    maximum_width = 83.8
+                                    maximum_width = 80
                                     class_size = 5.2
                                     skill_size = 7.4
                                     if (class_size * class_name_len
