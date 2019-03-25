@@ -75,4 +75,4 @@ class Judge:
         ability = Ability.from_text(text)
         if ability is not None:
             return Judge(JudgeKind.ability, ability)
-        return Judge(JudgeKind.string, original)
+        return Judge(JudgeKind.string, string=original)
