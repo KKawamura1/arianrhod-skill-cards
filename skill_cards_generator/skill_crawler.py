@@ -1,5 +1,5 @@
 import re
-from typing import Optional, List
+from typing import Optional, List, Tuple
 from sys import stdin
 import mojimoji
 from .skill import Skill
@@ -67,6 +67,9 @@ def unify_limitation(limitation: str) -> Optional[str]:
     return '、'.join(result)
 
 
+def split_classifier_from_effect(text: str) -> Tuple[]
+
+
 def make_skill_from_text(text: str) -> Optional[Skill]:
     match = skill_regex.fullmatch(text)
     if match is None:
@@ -107,6 +110,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
             pass
     limitation = unify_limitation(limitation)
     effect = match.group(9)
+
     return Skill(
         name=name,
         level_now=sl,
