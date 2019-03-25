@@ -25,7 +25,7 @@ timing_unify_table = {
     'ダメージロールの直後': ('ダメージロール直後', 'DR直後', 'adr', 'afdr'),
     '判定の直前': ('判定直前', 'bfjg', 'bjd', 'br'),
     '判定の直後': ('判定直後', 'afjg', 'ajd', 'ar'),
-    'パッシブ': ('pv', 'passive', 'pass', 'pas'),
+    'パッシブ': ('パッシヴ', 'pv', 'passive', 'pass', 'pas'),
     '戦闘前': {'bco', 'bfbtl'},
 }
 
