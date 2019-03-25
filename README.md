@@ -17,6 +17,10 @@ python main.py < your_skill_text.txt > your_skill_card.html
 
 You can use 'テキスト' output from [Online character sheet](https://charasheet.vampire-blood.net/).
 
+## Sleeve use
+
+If you want to use this program with sleeves, try `python main.py --sleeve`.
+
 ## Example
 
 ```
