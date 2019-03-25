@@ -8,7 +8,7 @@ from .html_generator import generate_html
 
 
 skill_regex = re.compile(
-    r'^《([^》]+)》\s*([^\s]+)\s*/\s*([^\s]*)\s*/\s*([^\s]*)\s*/\s*([^\s]*)\s*/\s*([^\s]*)\s*/\s*([^\s]*)\s*/\s*([^\s]*)\s*/\s*([^\s]*)\s*$', re.MULTILINE)
+    r'^《([^》/]+)》\s*([^\s/]+)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s]*)\s*$', re.MULTILINE)
 skill_area_begin_regex = re.compile(r'^■スキル■\s*$', re.MULTILINE)
 skill_area_end_regex = re.compile(r'^■コネクション■\s*$', re.MULTILINE)
 
