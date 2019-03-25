@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import enum
-from dataclasses import dataclass
 import re
+import mojimoji
 
 
 class RangeUnit(enum.Enum):
@@ -26,11 +26,12 @@ class SkillRangeKind(enum.Enum):
 
 
 class SkillRange:
-    kind_table = {
-        '武器': SkillRangeKind.weapon,
-        '視界': SkillRangeKind.sight,
-        'シーン': SkillRangeKind.scene,
-    }
+    kind_table = [
+        [SkillRangeKind.weapon, ('武器', '武', 'weapon', 'wp', 'w')],
+        [SkillRangeKind.sight, ('視界', '視', 'sight', 'st')],
+        [SkillRangeKind.scene, ('シーン', 'シ', 'scene', 'scn', 'sn')],
+        [SkillRangeKind.nothing, ('', '-')],
+    ]
     metre = re.compile(r'^\s*([0-9]+)\s*m$', re.IGNORECASE)
     square = re.compile(r'^\s*([0-9]+)\s*sq$', re.IGNORECASE)
 
@@ -52,9 +53,12 @@ class SkillRange:
 
     @staticmethod
     def from_text(text: str) -> SkillRange:
-        if text in SkillRange.kind_table:
-            return SkillRange(SkillRange.kind_table[text])
-        if text == '至近':
+        for kind, candidates in SkillRange.kind_table:
+            for candidate in candidates:
+                if (mojimoji.zen_to_han(text).lower()
+                        == mojimoji.zen_to_han(candidate).lower()):
+                    return SkillRange(kind)
+        if mojimoji.zen_to_han(text).lower() in ('至近', '至'):
             return SkillRange(SkillRangeKind.with_unit, 0)
         if SkillRange.metre.match(text) is not None:
             return SkillRange(
