@@ -23,4 +23,4 @@ You can use 'テキスト' output from [Online character sheet](https://charashe
 echo "《タイムマジック》 1/ムーブ/自動成功/自身/-/15//「タイミング：ムーブアクション」のスキルを2つ使用できる。ムーブアクションを増やすスキルや同じスキルを使用することはできない。" | python main.py > skill.html
 ```
 
-<img src="sample.png" width=100>
+<img src="sample.png" width=250>
