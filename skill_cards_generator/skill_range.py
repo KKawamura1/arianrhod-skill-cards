@@ -25,7 +25,6 @@ class SkillRangeKind(enum.Enum):
     string = enum.auto()
 
 
-@dataclass
 class SkillRange:
     kind_table = {
         '武器': SkillRangeKind.weapon,
