@@ -53,6 +53,7 @@ def generate_html(skills: Sequence[Skill]) -> str:
                                         doc.attr(style=(f'font-size: {new_size}mm; '
                                                         f'letter-spacing: {spacing}mm;'))
                                     text(skill.name)
+                            line('div', '', klass='card-border')
                             with tag('div', klass='card-main-box'):
                                 line('p', skill.timing, klass='timing')
                                 with tag('div', klass='inner-horizontal-box'):

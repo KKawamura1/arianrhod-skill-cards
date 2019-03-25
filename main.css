@@ -41,7 +41,8 @@ p {
 }
 
 .card-title-box,
-.card-main-box {
+.card-main-box,
+.card-border {
     width: 100%;
     border-style: solid;
     border-width: 0.6mm;
@@ -50,17 +51,25 @@ p {
 }
 
 .card-title-box {
-    height: 20.0mm;
+    height: 19.5mm;
     border-top-left-radius: 6.0mm;
     border-top-right-radius: 6.0mm;
     border-bottom-style: none;
     margin-bottom: 0mm;
     background-color: gainsboro !important;
     padding-top: 8.0mm;
-    padding-bottom: 2.0mm;
+    padding-bottom: 1.5mm;
     display: flex;
     flex-direction: row-reverse;
     align-items: flex-end;
+}
+
+.card-border {
+    height: 1.0mm;
+    width: 100%;
+    background: linear-gradient(to bottom, gainsboro, white) !important;
+    border-top-style: none;
+    border-bottom-style: none;
 }
 
 .card-title-box h3.skill-class,
@@ -89,12 +98,12 @@ p {
 }
 
 .card-main-box {
-    height: 114.0mm;
+    height: 113.5mm;
     border-bottom-left-radius: 6.0mm;
     border-bottom-right-radius: 6.0mm;
     border-top-style: none;
     margin-top: 0mm;
-    padding-top: 4.5mm;
+    padding-top: 4.0mm;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
