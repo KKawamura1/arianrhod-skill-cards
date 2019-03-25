@@ -4,6 +4,9 @@ from typing import Sequence
 from yattag import Doc, indent
 
 
+num_in_a_page = 9
+
+
 def generate_html(skills: Sequence[Skill]) -> str:
     """Generate html file from given skills."""
 
@@ -16,69 +19,70 @@ def generate_html(skills: Sequence[Skill]) -> str:
             line('title', 'Arianrhod Skill Cards')
             stag('meta', name='viewport',
                  content='width=device-width, initial-scale=1')
-            stag('link', rel='stylesheet', type='text/css',
-                 media='screen', href='main.css')
+            stag('link', rel='stylesheet', type='text/css', href='main.css')
         with tag('body'):
-            with tag('div', klass='cards-container'):
-                for skill in skills:
-                    with tag('div', klass='card-outline-box'):
-                        with tag('div', klass='card-title-box'):
-                            if skill.skill_class is not None:
-                                line('h3', skill.skill_class,
-                                     klass='skill-class')
-                            # Name with auto-smallening
-                            with tag('h2', klass='skill-name'):
+            for skill_id in range(0, len(skills), num_in_a_page):
+                with tag('div', klass='cards-container'):
+                    for skill in skills[skill_id:skill_id+num_in_a_page]:
+                        with tag('div', klass='card-outline-box'):
+                            with tag('div', klass='card-title-box'):
                                 if skill.skill_class is not None:
-                                    class_name_len = len(skill.skill_class)
+                                    line('h3', skill.skill_class,
+                                         klass='skill-class')
+                                # Name with auto-smallening
+                                with tag('h2', klass='skill-name'):
+                                    if skill.skill_class is not None:
+                                        class_name_len = len(skill.skill_class)
+                                    else:
+                                        class_name_len = 0
+                                    skill_name_len = len(skill.name)
+                                    maximum_width = 83.8
+                                    class_size = 5.2
+                                    skill_size = 7.4
+                                    if (class_size * class_name_len
+                                            + skill_size * skill_name_len
+                                            > maximum_width):
+                                        # Need to smallen
+                                        remaining_space = (maximum_width
+                                                           - class_size * class_name_len)
+                                        per_one_char = remaining_space / skill_name_len
+                                        decrease = skill_size - per_one_char
+                                        new_size = max(
+                                            skill_size - decrease * 0.6, 1.2)
+                                        spacing = max(-decrease * 0.4, -0.3)
+                                        doc.attr(style=(f'font-size: {new_size}mm; '
+                                                        f'letter-spacing: {spacing}mm;'))
+                                    text(skill.name)
+                            with tag('div', klass='card-main-box'):
+                                line('p', skill.timing, klass='timing')
+                                with tag('div', klass='inner-horizontal-box'):
+                                    line('p', str(skill.judge), klass='judge')
+                                    line('p', skill.target, klass='target')
+                                with tag('div', klass='inner-horizontal-box'):
+                                    line('p', str(skill.skill_range),
+                                         klass='effect-range')
+                                    if skill.cost is not None:
+                                        line('p', skill.cost,
+                                             klass='skill-cost')
+                                    else:
+                                        line('p', 'ー', klass='skill-cost')
+                                if skill.level_now is not None:
+                                    line('p', skill.level_now,
+                                         klass='skill-level-now')
+                                if skill.level_above is not None:
+                                    line('p', skill.level_above,
+                                         klass='skill-level-bound')
+                                if skill.usage_limitation is not None:
+                                    line('p', skill.usage_limitation,
+                                         klass='limitation')
                                 else:
-                                    class_name_len = 0
-                                skill_name_len = len(skill.name)
-                                maximum_width = 83.8
-                                class_size = 5.2
-                                skill_size = 7.4
-                                if (class_size * class_name_len
-                                        + skill_size * skill_name_len
-                                        > maximum_width):
-                                    # Need to smallen
-                                    remaining_space = (maximum_width
-                                                       - class_size * class_name_len)
-                                    per_one_char = remaining_space / skill_name_len
-                                    decrease = skill_size - per_one_char
-                                    new_size = max(
-                                        skill_size - decrease * 0.6, 1.2)
-                                    spacing = max(-decrease * 0.4, -0.3)
-                                    doc.attr(style=(f'font-size: {new_size}mm; '
-                                                    f'letter-spacing: {spacing}mm;'))
-                                text(skill.name)
-                        with tag('div', klass='card-main-box'):
-                            line('p', skill.timing, klass='timing')
-                            with tag('div', klass='inner-horizontal-box'):
-                                line('p', str(skill.judge), klass='judge')
-                                line('p', skill.target, klass='target')
-                            with tag('div', klass='inner-horizontal-box'):
-                                line('p', str(skill.skill_range),
-                                     klass='effect-range')
-                                if skill.cost is not None:
-                                    line('p', skill.cost, klass='skill-cost')
-                                else:
-                                    line('p', 'ー', klass='skill-cost')
-                            if skill.level_now is not None:
-                                line('p', skill.level_now,
-                                     klass='skill-level-now')
-                            if skill.level_above is not None:
-                                line('p', skill.level_above,
-                                     klass='skill-level-bound')
-                            if skill.usage_limitation is not None:
-                                line('p', skill.usage_limitation,
-                                     klass='limitation')
-                            else:
-                                line('p', 'ー',
-                                     klass='limitation')
-                            line('p', skill.effect, klass='effect')
-                            if skill.critical is not None:
-                                line('p', skill.critical, klass='critical')
-                            if skill.flavor is not None:
-                                line('p', skill.flavor, klass='flavor')
+                                    line('p', 'ー',
+                                         klass='limitation')
+                                line('p', skill.effect, klass='effect')
+                                if skill.critical is not None:
+                                    line('p', skill.critical, klass='critical')
+                                if skill.flavor is not None:
+                                    line('p', skill.flavor, klass='flavor')
     return indent(doc.getvalue())
 
 

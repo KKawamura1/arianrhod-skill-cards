@@ -3,6 +3,7 @@ body {
     font-family: "Microsoft Sans serif", sans-serif;
     letter-spacing: 0.0mm;
     font-feature-settings: "palt";
+    -webkit-print-color-adjust: exact;
 }
 
 div {
@@ -24,9 +25,11 @@ p {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 20mm;
+    justify-content: flex-start;
+    padding-top: 39.5mm;
     width: 364mm;
     padding-left: 28mm;
+    page-break-after: always;
 }
 
 .card-outline-box {
@@ -52,7 +55,7 @@ p {
     border-top-right-radius: 6.0mm;
     border-bottom-style: none;
     margin-bottom: 0mm;
-    background-color: gainsboro;
+    background-color: gainsboro !important;
     padding-top: 8.0mm;
     padding-bottom: 2.0mm;
     display: flex;
@@ -163,4 +166,8 @@ p.critical::before {
 p.flavor::before {
     content: "　";
     font-weight: bold;
+}
+
+@page {
+    size: B4 portrait;
 }
