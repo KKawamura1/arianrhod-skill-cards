@@ -31,12 +31,13 @@ def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool) -> str:
                         with tag('div', klass='card-outline-box'):
                             with tag('div', klass='card-title-box'):
                                 if skill.skill_class is not None:
-                                    line('h3', skill.skill_class,
+                                    line('h3', str(skill.skill_class),
                                          klass='skill-class')
                                 # Name with auto-smallening
                                 with tag('h2', klass='skill-name'):
                                     if skill.skill_class is not None:
-                                        class_name_len = len(skill.skill_class)
+                                        class_name_len = len(
+                                            str(skill.skill_class))
                                     else:
                                         class_name_len = 0
                                     skill_name_len = len(skill.name)
