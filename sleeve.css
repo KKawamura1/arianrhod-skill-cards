@@ -26,18 +26,18 @@ p {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
-    padding-top: 39.5mm;
-    width: 420mm;
-    padding-left: 28mm;
+    padding-top: 0mm;
+    width: 297mm;
+    padding-left: 0mm;
     page-break-after: always;
 }
 
 .card-outline-box {
     width: 94.0mm;
-    margin-top: 7.5mm;
-    margin-bottom: 7.5mm;
-    margin-right: 3.5mm;
-    margin-left: 3.5mm;
+    margin-top: 0mm;
+    margin-bottom: 0mm;
+    margin-right: 0mm;
+    margin-left: 0mm;
     background-color: #202020;
     border-radius: 4.0mm;
     padding: 4mm;
