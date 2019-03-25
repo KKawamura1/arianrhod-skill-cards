@@ -28,6 +28,7 @@ keyword_unify_table = {
     'パッシブ': ('パッシヴ', 'pv', 'passive', 'pass', 'pas'),
     '戦闘前': {'bco', 'bfbtl'},
     'シーン': {'sn', 'scene', 'scn'},
+    'アイテム': {'itm', 'item'},
     'シナリオ': {'シナ', 'sr', 'scenario'},
     'メインプロセス': {'mp', 'mainprocess', 'main process'},
 }
