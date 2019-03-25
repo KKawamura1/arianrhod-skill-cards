@@ -173,7 +173,7 @@ def make_skills_from_charasheet(sheet: str) -> List[Skill]:
     return skills
 
 
-def main() -> None:
+def main(css_name: str = 'skill_book.css') -> None:
     input_text = stdin.read()
     skills = make_skills_from_charasheet(input_text)
-    print(generate_html(skills))
+    print(generate_html(skills, css_name))

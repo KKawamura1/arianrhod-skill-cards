@@ -7,7 +7,7 @@ from yattag import Doc, indent
 num_in_a_page = 9
 
 
-def generate_html(skills: Sequence[Skill]) -> str:
+def generate_html(skills: Sequence[Skill], css_name: str) -> str:
     """Generate html file from given skills."""
 
     doc, tag, text, line = Doc().ttl()
@@ -19,7 +19,7 @@ def generate_html(skills: Sequence[Skill]) -> str:
             line('title', 'Arianrhod Skill Cards')
             stag('meta', name='viewport',
                  content='width=device-width, initial-scale=1')
-            stag('link', rel='stylesheet', type='text/css', href='main.css')
+            stag('link', rel='stylesheet', type='text/css', href=css_name)
         with tag('body'):
             for skill_id in range(0, len(skills), num_in_a_page):
                 with tag('div', klass='cards-container'):

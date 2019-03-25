@@ -1,4 +1,13 @@
 from skill_cards_generator.skill_crawler import main
+import argparse
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--sleeve', action='store_true',
+                        help='Print for sleeves.')
+    params = parser.parse_args()
+
+    css_name = 'skill_book.css'
+    if params.sleeve:
+        css_name = 'sleeve.css'
+    main(css_name)
