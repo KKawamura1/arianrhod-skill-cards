@@ -1,0 +1,151 @@
+body {
+    /* See: https://mplus-fonts.osdn.jp/about.html */
+    font-family: 'M+ P Type-1 (general-j) Regular', 'M+ P Type-1 (basic latin) Regular', "Microsoft Sans serif", sans-serif;
+    letter-spacing: -0.1mm;
+    font-feature-settings: "palt";
+    -webkit-print-color-adjust: exact;
+}
+
+div {
+    margin: 0mm;
+    padding: 0mm;
+    box-sizing: border-box;
+}
+
+p {
+    margin: 0mm;
+    padding: 0mm;
+    margin-block-start: 0mm;
+    margin-block-end: 0.4mm;
+    text-align: justify;
+    text-justify: inter-ideograph;
+}
+
+.cards-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding-top: 39.5mm;
+    width: 364mm;
+    padding-left: 28mm;
+    page-break-after: always;
+}
+
+.card-title-box {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+}
+
+.card-border {
+    width: 100%;
+    background: linear-gradient(to bottom, gainsboro, white) !important;
+}
+
+.card-title-box h3.skill-class,
+.card-title-box h2.skill-name {
+    margin-block-start: 0mm;
+    margin-block-end: 0mm;
+    margin-inline-start: 0mm;
+    margin-inline-end: 0mm;
+}
+
+.card-title-box h3.skill-class,
+.card-title-box h2.skill-name {
+    font-family: 'ヒラギノ角ゴシック', 'Hiragino Sans', sans-serif;
+    font-weight: bold;
+}
+
+.card-title-box h3.skill-class {
+    font-size: 5.2mm;
+    margin-bottom: 0.8mm;
+    margin-right: 0.2mm;
+}
+
+.card-title-box h2.skill-name {
+    font-size: 7.4mm;
+    flex: 1;
+}
+
+.card-main-box {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: stretch;
+}
+
+.inner-horizontal-box {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.inner-horizontal-box p {
+    width: 50%;
+}
+
+p.timing {
+    letter-spacing: -0.2mm;
+}
+
+p.timing::before {
+    content: "タイミング：";
+    font-weight: bold;
+}
+
+p.judge::before {
+    content: "判定：";
+    font-weight: bold;
+}
+
+p.target::before {
+    content: "対象：";
+    font-weight: bold;
+}
+
+p.effect-range::before {
+    content: "射程：";
+    font-weight: bold;
+}
+
+p.skill-cost::before {
+    content: "コスト：";
+    font-weight: bold;
+}
+
+p.skill-level-bound::before {
+    content: "ＳＬ上限：";
+    font-weight: bold;
+}
+
+p.skill-level-now::before {
+    content: "ＳＬ：";
+    font-weight: bold;
+}
+
+p.limitation::before {
+    content: "使用条件：";
+    font-weight: bold;
+}
+
+p.effect::before {
+    content: "効果：";
+    font-weight: bold;
+}
+
+p.critical::before {
+    content: "クリティカル：";
+    font-weight: bold;
+}
+
+p.flavor::before {
+    content: "　";
+    font-weight: bold;
+}
+
+@page {
+    size: B4 portrait;
+}

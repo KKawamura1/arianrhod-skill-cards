@@ -19,11 +19,16 @@ def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool) -> str:
             line('title', 'Arianrhod Skill Cards')
             stag('meta', name='viewport',
                  content='width=device-width, initial-scale=1')
+            stag('link', rel='stylesheet', type='text/css', href='common.css')
             if is_sleeve_mode:
                 css_name = 'sleeve.css'
             else:
                 css_name = 'skill_book.css'
             stag('link', rel='stylesheet', type='text/css', href=css_name)
+            stag('link', rel='stylesheet', type='text/css',
+                 href='http://mplus-fonts.sourceforge.jp/webfonts/basic_latin/mplus_webfonts.css')
+            stag('link', rel='stylesheet', type='text/css',
+                 href='http://mplus-fonts.sourceforge.jp/webfonts/general-j/mplus_webfonts.css')
         with tag('body'):
             for skill_id in range(0, len(skills), num_in_a_page):
                 with tag('div', klass='cards-container'):

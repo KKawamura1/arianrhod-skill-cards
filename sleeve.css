@@ -1,35 +1,11 @@
 body {
     font-size: 4.5mm;
-    font-family: "Microsoft Sans serif", sans-serif;
-    letter-spacing: 0.0mm;
-    font-feature-settings: "palt";
-    -webkit-print-color-adjust: exact;
-}
-
-div {
-    margin: 0mm;
-    padding: 0mm;
-    box-sizing: border-box;
-}
-
-p {
-    margin: 0mm;
-    padding: 0mm;
-    margin-block-start: 0mm;
-    margin-block-end: 0.4mm;
-    text-align: justify;
-    text-justify: inter-ideograph;
 }
 
 .cards-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
     padding-top: 0mm;
     width: 297mm;
     padding-left: 0mm;
-    page-break-after: always;
 }
 
 .card-outline-box {
@@ -57,122 +33,15 @@ p {
     background-color: gainsboro !important;
     padding-top: 4.0mm;
     padding-bottom: 0.5mm;
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: flex-end;
 }
 
 .card-border {
     height: 3.0mm;
-    width: 100%;
-    background: linear-gradient(to bottom, gainsboro, white) !important;
-    border-top-style: none;
-    border-bottom-style: none;
-}
-
-.card-title-box h3.skill-class,
-.card-title-box h2.skill-name {
-    margin-block-start: 0mm;
-    margin-block-end: 0mm;
-    margin-inline-start: 0mm;
-    margin-inline-end: 0mm;
-}
-
-.card-title-box h3.skill-class,
-.card-title-box h2.skill-name {
-    font-family: 'ヒラギノ角ゴシック', 'Hiragino Sans', sans-serif;
-    font-weight: bold;
-}
-
-.card-title-box h3.skill-class {
-    font-size: 5.2mm;
-    margin-bottom: 0.8mm;
-    margin-right: 0.2mm;
-}
-
-.card-title-box h2.skill-name {
-    font-size: 7.4mm;
-    flex: 1;
 }
 
 .card-main-box {
     height: 108.5mm;
     margin-top: 0mm;
     padding-top: 3.0mm;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    align-content: stretch;
     background-color: white !important;
-}
-
-.inner-horizontal-box {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-}
-
-.inner-horizontal-box p {
-    width: 50%;
-}
-
-p.timing::before {
-    content: "タイミング：";
-    font-weight: bold;
-}
-
-p.judge::before {
-    content: "判定：";
-    font-weight: bold;
-}
-
-p.target::before {
-    content: "対象：";
-    font-weight: bold;
-}
-
-p.effect-range::before {
-    content: "射程：";
-    font-weight: bold;
-}
-
-p.skill-cost::before {
-    content: "コスト：";
-    font-weight: bold;
-}
-
-p.skill-level-bound::before {
-    content: "ＳＬ上限：";
-    font-weight: bold;
-}
-
-p.skill-level-now::before {
-    content: "ＳＬ：";
-    font-weight: bold;
-}
-
-p.limitation::before {
-    content: "使用条件：";
-    font-weight: bold;
-}
-
-p.effect::before {
-    content: "効果：";
-    font-weight: bold;
-}
-
-p.critical::before {
-    content: "クリティカル：";
-    font-weight: bold;
-}
-
-p.flavor::before {
-    content: "　";
-    font-weight: bold;
-}
-
-@page {
-    size: A4 portrait;
 }
