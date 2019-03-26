@@ -13,11 +13,14 @@ from .normalized_check import normalize_and_check_with_default
 
 
 skill_regex = re.compile(
-    r'^《([^》/]+)》\s*([^\s/]+)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s]*)\s*$')
+    r'^《([^》/]+)》\s*([^\s/]+)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*(.*)$')
 skill_area_begin_regex = re.compile(r'^■スキル■$', re.MULTILINE)
 skill_area_end_regex = re.compile(r'^■コネクション■$', re.MULTILINE)
 critical_regex = re.compile(
     r'(cri?t?|critic(al)?|crl|クリ((ティ)?カル)?)([:>：＞〉→]|->|=>)\s*(?P<text>.+?)[。\n$]')
+flavor_regex = re.compile(
+    r'(((fl(av(ou?r)?)?|フレーバー?)([:>：＞〉→]|->|=>))|##)\s*(?P<text>.+?[。\s\n]*)$'
+)
 
 replace_text_slash = '___SLASH___'
 
@@ -84,9 +87,10 @@ def unify_limitation(limitation: str) -> Optional[str]:
 
 def split_effect(
     text: str
-) -> Tuple[Optional[Classifier], str, Optional[str]]:
+) -> Tuple[Optional[Classifier], str, Optional[str], Optional[str]]:
     classifier: Optional[Classifier] = None
     critical_effect: Optional[str] = None
+    flavor_text: Optional[str] = None
     delimiter_index = text.find('。')
     if delimiter_index != -1:
         candidate = text[:delimiter_index]
@@ -96,11 +100,21 @@ def split_effect(
                 text = ''
             else:
                 text = text[delimiter_index + 1:]
-    match = critical_regex.search(text)
-    if match is not None:
-        critical_effect = unify_critical(match.group('text'))
-        text = text[: match.start()] + text[match.end():]
-    return classifier, text, critical_effect
+    match_crit = critical_regex.search(text)
+    if match_crit is not None:
+        critical_effect = unify_critical(match_crit.group('text'))
+        if len(text) > match_crit.end():
+            text = text[: match_crit.start()] + text[match_crit.end():]
+        else:
+            text = text[: match_crit.start()]
+    match_flav = flavor_regex.search(text)
+    if match_flav is not None:
+        flavor_text = match_flav.group('text')
+        if len(text) > match_flav.end():
+            text = text[:match_flav.start()] + text[match_flav.end()]
+        else:
+            text = text[:match_flav.start()]
+    return classifier, text, critical_effect, flavor_text
 
 
 def make_skill_from_text(text: str) -> Optional[Skill]:
@@ -134,7 +148,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
         except ValueError:
             pass
     limitation = unify_limitation(limitation)
-    classifier, effect, critical = split_effect(match.group(9))
+    classifier, effect, critical, flavor = split_effect(match.group(9))
 
     effect = cost.as_effect() + effect
     if difficulty is not None:
@@ -152,6 +166,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
         skill_class=classifier,
         effect=effect,
         critical=critical,
+        flavor=flavor,
         level_above=level_above
     )
 
