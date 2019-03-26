@@ -32,7 +32,7 @@ class SkillRange:
         [SkillRangeKind.scene, ('シーン', 'シ', 'scene', 'scn', 'sn')],
         [SkillRangeKind.nothing, ('', '-')],
     ]
-    metre = re.compile(r'^\s*([0-9]+)\s*m$', re.IGNORECASE)
+    metre = re.compile(r'^\s*([0-9]+)\s*m?$', re.IGNORECASE)
     square = re.compile(r'^\s*([0-9]+)\s*sq$', re.IGNORECASE)
 
     def __init__(
