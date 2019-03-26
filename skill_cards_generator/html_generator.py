@@ -8,7 +8,7 @@ import mojimoji
 num_in_a_page = 9
 
 
-def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool) -> str:
+def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool, large: bool) -> str:
     """Generate html file from given skills."""
 
     doc, tag, text, line = Doc().ttl()
@@ -45,7 +45,10 @@ def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool) -> str:
                                     skill_name_len = len(skill.name)
                                     maximum_width = 80
                                     if is_sleeve_mode:
-                                        maximum_width = 65
+                                        maximum_width = 72
+                                    if large:
+                                        maximum_width = int(
+                                            maximum_width * 1.1)
                                     class_size = 5.2
                                     skill_size = 7.4
                                     if (class_size * class_name_len

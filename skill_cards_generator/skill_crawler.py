@@ -250,7 +250,7 @@ def make_skills_from_charasheet(sheet: str) -> List[Skill]:
     return skills
 
 
-def main(is_sleeve_mode: bool) -> None:
+def main(is_sleeve_mode: bool, large: bool) -> None:
     input_text = stdin.read()
     skills = make_skills_from_charasheet(input_text)
-    print(generate_html(skills, is_sleeve_mode))
+    print(generate_html(skills, is_sleeve_mode, large))
