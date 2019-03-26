@@ -59,6 +59,24 @@ unify_critical_table: List[Tuple[str, Set[str]]] = [
     ('コスト0', {'0', 'cost0', 'cost', 'ct0', 'ct'})
 ]
 
+unify_effect_table: List[Tuple[str, str]] = [
+    ('ｄ', 'Ｄ'),
+    ('ＳＬＤ', '（ＳＬ）Ｄ'),
+    ('Ｍａｊｏｒ', 'メジャー'),
+    ('Ｍｉｎｏｒ', 'マイナー'),
+    ('。拒否可能。', '。対象はこの効果を拒否できる。'),
+    ('。メインプロセス終了まで持続。', '。この効果はメインプロセス終了まで持続する。'),
+    ('。ラウンド終了まで持続。', '。この効果はラウンド終了まで持続する。'),
+    ('。シーン終了まで持続。', '。この効果はシーン終了まで持続する。'),
+    ('。シナリオ終了まで持続。', '。この効果はシナリオ終了まで持続する。'),
+    ('行う', '行なう'),
+    ('を行った', 'を行なった'),
+    ('ＤＲ直前', 'ダメージロールの直前'),
+    ('ＤＲの直前', 'ダメージロールの直前'),
+    ('ＤＲ直後', 'ダメージロールの直後'),
+    ('ＤＲの直後', 'ダメージロールの直後'),
+]
+
 
 def unify_timing(timing: str) -> str:
     return normalize_and_check_with_default(timing, unify_timing_table, timing)
@@ -73,7 +91,6 @@ def unify_limitation(limitation: str) -> Optional[str]:
         slash_separated = word.split('/')
         if len(slash_separated) == 2:
             before = slash_separated[0]
-            before = mojimoji.han_to_zen(before.upper())
             after = slash_separated[1]
             after = normalize_and_check_with_default(
                 after, unify_timing_table, after)
@@ -89,7 +106,8 @@ def unify_limitation(limitation: str) -> Optional[str]:
             if len(limitation_sep) == 0:
                 continue
             result = unify_limitation_with_one_word(limitation_sep)
-            if result:
+            if result is not None:
+                result = mojimoji.han_to_zen(result.upper())
                 results.append(result)
     if len(results) == 0:
         return None
@@ -104,7 +122,7 @@ def unify_effect(text: str) -> str:
         text = text.replace(o, target)
 
     # Hankaku -> Zenkaku
-    text = mojimoji.han_to_zen(text.upper())
+    text = mojimoji.han_to_zen(text)
 
     # この《スキル》による -> この 《スキル》 による
     while True:
@@ -119,6 +137,13 @@ def unify_effect(text: str) -> str:
             break
         text = (text[: match.start()] + match.group('text')
                 + ' ' + match.group('after') + text[match.end():])
+
+    # Replace text
+    for before, after in unify_effect_table:
+        text = text.replace(before, after)
+
+    if len(text) > 0 and text[-1] != '。':
+        text = text + '。'
 
     return text
 
@@ -190,7 +215,8 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
 
     effect = cost.as_effect() + effect
     if difficulty is not None:
-        effect = f'難易度{difficulty}の{judge.to_str(True)}を行なう。' + effect
+        additional_text = f'難易度{difficulty}の{judge.to_str(True)}を行なう。'
+        effect = (mojimoji.han_to_zen(additional_text) + effect)
 
     return Skill(
         name=name,

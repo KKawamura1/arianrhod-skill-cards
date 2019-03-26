@@ -52,7 +52,7 @@ def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool, large: bool) ->
                                     skill_name_len = len(skill.name)
                                     maximum_width = 80
                                     if is_sleeve_mode:
-                                        maximum_width = 72
+                                        maximum_width = 65
                                     if large:
                                         maximum_width = int(
                                             maximum_width * 1.1)
