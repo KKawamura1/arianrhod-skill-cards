@@ -2,6 +2,7 @@ from .skill import Skill
 from .skill_range import SkillRange, SkillRangeKind
 from typing import Sequence
 from yattag import Doc, indent
+import mojimoji
 
 
 num_in_a_page = 9
@@ -25,10 +26,6 @@ def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool) -> str:
             else:
                 css_name = 'skill_book.css'
             stag('link', rel='stylesheet', type='text/css', href=css_name)
-            stag('link', rel='stylesheet', type='text/css',
-                 href='http://mplus-fonts.sourceforge.jp/webfonts/basic_latin/mplus_webfonts.css')
-            stag('link', rel='stylesheet', type='text/css',
-                 href='http://mplus-fonts.sourceforge.jp/webfonts/general-j/mplus_webfonts.css')
         with tag('body'):
             for skill_id in range(0, len(skills), num_in_a_page):
                 with tag('div', klass='cards-container'):
@@ -77,10 +74,10 @@ def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool) -> str:
                                     line('p', str(skill.cost),
                                          klass='skill-cost')
                                 if skill.level_now is not None:
-                                    line('p', skill.level_now,
+                                    line('p', mojimoji.han_to_zen(str(skill.level_now)),
                                          klass='skill-level-now')
                                 if skill.level_above is not None:
-                                    line('p', skill.level_above,
+                                    line('p', mojimoji.han_to_zen(str(skill.level_above)),
                                          klass='skill-level-bound')
                                 if skill.usage_limitation is not None:
                                     line('p', skill.usage_limitation,

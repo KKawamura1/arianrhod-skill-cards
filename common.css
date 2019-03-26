@@ -1,6 +1,5 @@
 body {
-    /* See: https://mplus-fonts.osdn.jp/about.html */
-    font-family: 'M+ P Type-1 (general-j) Regular', 'M+ P Type-1 (basic latin) Regular', "Microsoft Sans serif", sans-serif;
+    font-family: "Microsoft Sans serif", sans-serif;
     letter-spacing: -0.1mm;
     font-feature-settings: "palt";
     -webkit-print-color-adjust: exact;
@@ -53,7 +52,8 @@ p {
 
 .card-title-box h3.skill-class,
 .card-title-box h2.skill-name {
-    font-family: 'ヒラギノ角ゴシック', 'Hiragino Sans', sans-serif;
+    font-family: 'M+ P Type-1 (general-j) Bold', 'M+ P Type-1 (basic latin) Bold';
+    /*'ヒラギノ角ゴシック', 'Hiragino Sans', sans-serif;*/
     font-weight: bold;
 }
 
