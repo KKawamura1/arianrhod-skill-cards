@@ -12,10 +12,21 @@ def normalize_and_compare(source: str, target: str) -> bool:
 
 def normalize_and_check(
     target: str,
-    table: List[Tuple[T, Set[str]]]
+    table: List[Tuple[T, Set[str]]],
 ) -> Optional[T]:
     for key, candidates in table:
         for candidate in candidates:
             if normalize_and_compare(target, candidate):
                 return key
     return None
+
+
+def normalize_and_check_with_default(
+    target: str,
+    table: List[Tuple[T, Set[str]]],
+    default: T
+) -> T:
+    result = normalize_and_check(target, table)
+    if result is None:
+        return default
+    return result

@@ -9,7 +9,7 @@ from .html_generator import generate_html
 from .classifier import Classifier
 from .target import Target
 from .cost import Cost
-from .normalized_check import normalize_and_check
+from .normalized_check import normalize_and_check_with_default
 
 
 skill_regex = re.compile(
@@ -41,13 +41,18 @@ unify_timing_table: List[Tuple[str, Set[str]]] = [
     ('メインプロセス', {'mp', 'mainprocess', 'main process'}),
 ]
 
+unify_critical_table: List[Tuple[str, Set[str]]] = [
+    ('ダイスロール増加', {'ダイスロール増', 'DR増加', 'DR増', 'D増', 'DR', '増加', '増'}),
+    ('コスト0', {'0', 'cost0', 'cost', 'ct0', 'ct'})
+]
+
 
 def unify_timing(timing: str) -> str:
-    unified = normalize_and_check(timing, unify_timing_table)
-    if unified is not None:
-        return unified
-    else:
-        return timing
+    return normalize_and_check_with_default(timing, unify_timing_table, timing)
+
+
+def unify_critical(critical: str) -> str:
+    return normalize_and_check_with_default(critical, unify_critical_table, critical)
 
 
 def unify_limitation(limitation: str) -> Optional[str]:
@@ -56,9 +61,8 @@ def unify_limitation(limitation: str) -> Optional[str]:
         if len(slash_separated) == 2:
             before = slash_separated[0]
             after = slash_separated[1]
-            unified_after = normalize_and_check(after, unify_timing_table)
-            if unified_after is not None:
-                after = unified_after
+            after = normalize_and_check_with_default(
+                after, unify_timing_table, after)
             return f'{after}{before}回'
         if word in {'', '-', 'ー'}:
             return None
@@ -94,7 +98,7 @@ def split_effect(
                 text = text[delimiter_index + 1:]
     match = critical_regex.search(text)
     if match is not None:
-        critical_effect = match.group('text')
+        critical_effect = unify_critical(match.group('text'))
         text = text[: match.start()] + text[match.end():]
     return classifier, text, critical_effect
 
