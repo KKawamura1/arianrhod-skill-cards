@@ -56,7 +56,7 @@ unify_timing_table: List[Tuple[str, Set[str]]] = [
 
 unify_critical_table: List[Tuple[str, Set[str]]] = [
     ('ダイスロール増加', {'ダイスロール増', 'DR増加', 'DR増', 'D増', 'DR', '増加', '増'}),
-    ('コスト0', {'0', 'cost0', 'cost', 'ct0', 'ct'})
+    ('コスト０', {'0', 'コスト0', 'cost0', 'cost', 'ct0', 'ct'})
 ]
 
 unify_effect_table: List[Tuple[str, str]] = [
