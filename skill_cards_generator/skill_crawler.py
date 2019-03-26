@@ -21,6 +21,15 @@ critical_regex = re.compile(
 flavor_regex = re.compile(
     r'(((fl(av(ou?r)?)?|フレーバー?)([:>：＞〉→]|->|=>))|##)\s*(?P<text>.+?[。\s\n]*)$'
 )
+symbol_set = {':', '：', '.', '。', ',', '、', '(', '（', ')', '）',
+              '[', ']', '「', '」', '［', '］', '{', '}', '｛', '｝', '<', '>',
+              '＜', '＞', '〈', '〉', '《', '》', '-', 'ー', '=', '＝', '+', '＋'}
+symbols = re.escape(''.join(list(symbol_set)))
+d_bracket_regex_before = re.compile(
+    r'(?P<before>[^\s' + symbols + r'])(?P<text>《.+?》)')
+d_bracket_regex_after = re.compile(
+    r'(?P<text>《.+?》)(?P<after>[^\s' + symbols + r'])')
+
 
 replace_text_slash = '___SLASH___'
 
@@ -86,6 +95,30 @@ def unify_limitation(limitation: str) -> Optional[str]:
     return '、'.join(results)
 
 
+def unify_effect(text: str) -> str:
+    # * -> ×
+    origin = ['*', '＊']
+    target = '×'
+    for o in origin:
+        text = text.replace(o, target)
+
+    # Hankaku -> Zenkaku
+    text = mojimoji.han_to_zen(text, digit=False)
+    while True:
+        match = d_bracket_regex_before.search(text)
+        if match is None:
+            break
+        text = (text[: match.start()] + match.group('before')
+                + ' ' + match.group('text') + text[match.end():])
+    while True:
+        match = d_bracket_regex_after.search(text)
+        if match is None:
+            break
+        text = (text[: match.start()] + match.group('text')
+                + ' ' + match.group('after') + text[match.end():])
+    return text
+
+
 def split_effect(
     text: str
 ) -> Tuple[Optional[Classifier], str, Optional[str], Optional[str]]:
@@ -115,7 +148,7 @@ def split_effect(
             text = text[:match_flav.start()] + text[match_flav.end()]
         else:
             text = text[:match_flav.start()]
-    return classifier, text, critical_effect, flavor_text
+    return classifier, unify_effect(text), critical_effect, flavor_text
 
 
 def make_skill_from_text(text: str) -> Optional[Skill]:
@@ -209,17 +242,6 @@ def make_skills_from_charasheet(sheet: str) -> List[Skill]:
         if skill.usage_limitation is not None:
             skill.usage_limitation = skill.usage_limitation.replace(
                 replace_text_slash, '/')
-
-    # Unify Times symbol
-    origin = ['*', '＊']
-    target = '×'
-    for skill in skills:
-        for o in origin:
-            skill.effect = skill.effect.replace(o, target)
-
-    # Zenkakify characters in effect area
-    for skill in skills:
-        skill.effect = mojimoji.han_to_zen(skill.effect, digit=False)
 
     return skills
 
