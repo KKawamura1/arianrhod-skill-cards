@@ -102,7 +102,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
     if 7 <= sl <= 9:
         sl -= 5
     timing = unify_timing(match.group(3))
-    judge = Judge.from_text(match.group(4))
+    judge, difficulty = Judge.from_text(match.group(4))
     target = Target.from_text(match.group(5))
     skill_range_str = match.group(6)
     skill_range = SkillRange.from_text(skill_range_str)
@@ -125,6 +125,9 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
             pass
     limitation = unify_limitation(limitation)
     classifier, effect = split_classifier_from_effect(match.group(9))
+
+    if difficulty is not None:
+        effect = f'難易度{difficulty}の{judge.to_str(True)}を行なう。' + effect
 
     return Skill(
         name=name,
