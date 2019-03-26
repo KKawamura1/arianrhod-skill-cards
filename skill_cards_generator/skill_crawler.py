@@ -1,5 +1,5 @@
 import re
-from typing import Optional, List, Tuple
+from typing import Optional, List, Tuple, Set
 from sys import stdin
 import mojimoji
 from .skill import Skill
@@ -8,6 +8,7 @@ from .judge import Judge
 from .html_generator import generate_html
 from .classifier import Classifier
 from .target import Target
+from .normalized_check import normalize_and_check
 
 
 skill_regex = re.compile(
@@ -17,44 +18,45 @@ skill_area_end_regex = re.compile(r'^■コネクション■$', re.MULTILINE)
 
 replace_text_slash = '___SLASH___'
 
-keyword_unify_table = {
-    'セットアッププロセス': ('セットアップ', 'setup', 'sup', 'set'),
-    'イニシアチブプロセス': ('イニシアチブ', 'init', 'ini', 'in'),
-    'ムーブアクション': ('ムーブ', 'move', 'mov', 'mv'),
-    'マイナーアクション': ('マイナー', 'minor', 'mnr', 'mn'),
-    'メジャーアクション': ('メジャー', 'major', 'maj', 'mjr', 'mj'),
-    'クリンナッププロセス': ('クリンナップ', 'クリナップ', 'クリナッププロセス', 'clean', 'cup', 'c', 'clean up', 'cleanup'),
-    'ダメージロールの直前': ('ダメージロール直前', 'DR直前', 'bdr', 'bfdr'),
-    'ダメージロールの直後': ('ダメージロール直後', 'DR直後', 'adr', 'afdr'),
-    '判定の直前': ('判定直前', 'bfjg', 'bjd', 'br'),
-    '判定の直後': ('判定直後', 'afjg', 'ajd', 'ar'),
-    'パッシブ': ('パッシヴ', 'pv', 'passive', 'pass', 'pas'),
-    '戦闘前': {'bco', 'bfbtl'},
-    'シーン': {'sn', 'scene', 'scn'},
-    'アイテム': {'itm', 'item'},
-    'シナリオ': {'シナ', 'sr', 'scenario'},
-    'メインプロセス': {'mp', 'mainprocess', 'main process'},
-}
-
-
-def unify_keyword(word: str) -> str:
-    for target, candidates in keyword_unify_table.items():
-        for candidate in candidates:
-            if (mojimoji.zen_to_han(word).lower()
-                    == mojimoji.zen_to_han(candidate).lower()):
-                return target
-    return word
+unify_timing_table: List[Tuple[str, Set[str]]] = [
+    ('セットアッププロセス', {'セットアップ', 'setup', 'sup', 'set'}),
+    ('イニシアチブプロセス', {'イニシアチブ', 'init', 'ini', 'in'}),
+    ('ムーブアクション', {'ムーブ', 'move', 'mov', 'mv'}),
+    ('マイナーアクション', {'マイナー', 'minor', 'mnr', 'mn'}),
+    ('メジャーアクション', {'メジャー', 'major', 'maj', 'mjr', 'mj'}),
+    ('クリンナッププロセス', {'クリンナップ', 'クリナップ', 'クリナッププロセス',
+                    'clean', 'cup', 'c', 'clean up', 'cleanup'}),
+    ('ダメージロールの直前', {'ダメージロール直前', 'DR直前', 'bdr', 'bfdr'}),
+    ('ダメージロールの直後', {'ダメージロール直後', 'DR直後', 'adr', 'afdr'}),
+    ('判定の直前', {'判定直前', 'bfjg', 'bjd', 'br'}),
+    ('判定の直後', {'判定直後', 'afjg', 'ajd', 'ar'}),
+    ('パッシブ', {'パッシヴ', 'pv', 'passive', 'pass', 'pas'}),
+    ('戦闘前', {'bco', 'bfbtl'}),
+    ('シーン', {'sn', 'scene', 'scn'}),
+    ('アイテム', {'itm', 'item'}),
+    ('シナリオ', {'シナ', 'sr', 'scenario'}),
+    ('メインプロセス', {'mp', 'mainprocess', 'main process'}),
+]
 
 
 def unify_timing(timing: str) -> str:
-    return unify_keyword(timing)
+    unified = normalize_and_check(timing, unify_timing_table)
+    if unified is not None:
+        return unified
+    else:
+        return timing
 
 
 def unify_limitation(limitation: str) -> Optional[str]:
     def unify_limitation_with_one_word(word: str) -> Optional[str]:
         slash_separated = word.split('/')
         if len(slash_separated) == 2:
-            return f'{unify_keyword(slash_separated[1])}{slash_separated[0]}回'
+            before = slash_separated[0]
+            after = slash_separated[1]
+            unified_after = normalize_and_check(after, unify_timing_table)
+            if unified_after is not None:
+                after = unified_after
+            return f'{after}{before}回'
         if word in {'', '-', 'ー'}:
             return None
         return word
@@ -104,8 +106,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
     timing = unify_timing(match.group(3))
     judge, difficulty = Judge.from_text(match.group(4))
     target = Target.from_text(match.group(5))
-    skill_range_str = match.group(6)
-    skill_range = SkillRange.from_text(skill_range_str)
+    skill_range = SkillRange.from_text(match.group(6))
     cost_str = match.group(7)
     if len(cost_str) == 0:
         cost = None

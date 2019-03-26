@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import enum
 from typing import Sequence, Optional, List, Tuple, Set
-import mojimoji
 from .element import Element
 from .normalized_check import normalize_and_check
 
