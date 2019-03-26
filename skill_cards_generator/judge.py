@@ -20,13 +20,14 @@ class JudgeKind(enum.Enum):
 
 unify_judge_table = [
     [JudgeKind.nothing, ('-', '')],
-    [JudgeKind.auto_success, ('自', '成', '自動', '成功', '自動成功')],
-    [JudgeKind.hit, ('命', '命中', 'hit', 'ht')],
+    [JudgeKind.auto_success, ('自', '成', '自動', '成功',
+                              '自動成功', 'success', 'suc', 'sc', 's')],
+    [JudgeKind.hit, ('命', '命中', 'hit', 'ht', 'h')],
     [JudgeKind.spell, ('魔', '魔術', 'spell', 'spl', 'sp',
-                       'magic', 'mag', 'mg')],
+                       'magic', 'mag', 'mg', 'm')],
     [JudgeKind.song, ('呪', '歌', '呪歌', 'song', 'sg')],
     [JudgeKind.alchemy, ('錬', '錬金', '錬金術', 'alchemy',
-                         'alc', 'ac', 'acm')],
+                         'alc', 'ac', 'acm', 'a')],
 ]
 judge_border_regex = re.compile(
     r'(.+?)[\s(（\[]?(難)?(難易度)?([0-9０１２３４５６７８９]+)[)）\]\s]?')
