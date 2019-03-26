@@ -63,6 +63,7 @@ def unify_limitation(limitation: str) -> Optional[str]:
         slash_separated = word.split('/')
         if len(slash_separated) == 2:
             before = slash_separated[0]
+            before = mojimoji.han_to_zen(before.upper())
             after = slash_separated[1]
             after = normalize_and_check_with_default(
                 after, unify_timing_table, after)
