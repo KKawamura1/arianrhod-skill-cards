@@ -8,6 +8,7 @@ from .judge import Judge
 from .html_generator import generate_html
 from .classifier import Classifier
 from .target import Target
+from .cost import Cost
 from .normalized_check import normalize_and_check
 
 
@@ -75,18 +76,6 @@ def unify_limitation(limitation: str) -> Optional[str]:
     return '、'.join(results)
 
 
-def unify_cost(cost_candidate: str) -> Optional[int]:
-    # TODO: fate 1
-    if len(cost_candidate) == 0:
-        cost = None
-    else:
-        try:
-            cost = int(cost_candidate)
-        except ValueError:
-            cost = None
-    return cost
-
-
 def split_classifier_from_effect(text: str) -> Tuple[Optional[Classifier], str]:
     delimiter_index = text.find('。')
     if delimiter_index != -1:
@@ -119,7 +108,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
     judge, difficulty = Judge.from_text(match.group(4))
     target = Target.from_text(match.group(5))
     skill_range = SkillRange.from_text(match.group(6))
-    cost = unify_cost(match.group(7))
+    cost = Cost.from_text(match.group(7))
     limitation = match.group(8)
     level_above = None
     if len(limitation) != 0:
@@ -132,6 +121,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
     limitation = unify_limitation(limitation)
     classifier, effect = split_classifier_from_effect(match.group(9))
 
+    effect = cost.as_effect() + effect
     if difficulty is not None:
         effect = f'難易度{difficulty}の{judge.to_str(True)}を行なう。' + effect
 

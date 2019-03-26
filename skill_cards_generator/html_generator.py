@@ -69,11 +69,8 @@ def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool) -> str:
                                 with tag('div', klass='inner-horizontal-box'):
                                     line('p', str(skill.skill_range),
                                          klass='effect-range')
-                                    if skill.cost is not None:
-                                        line('p', skill.cost,
-                                             klass='skill-cost')
-                                    else:
-                                        line('p', 'ー', klass='skill-cost')
+                                    line('p', str(skill.cost),
+                                         klass='skill-cost')
                                 if skill.level_now is not None:
                                     line('p', skill.level_now,
                                          klass='skill-level-now')
