@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import enum
 from typing import List, Tuple, Set
+import mojimoji
 from .normalized_check import normalize_and_check, normalize_and_compare
 
 
@@ -75,9 +76,9 @@ class Target:
         elif self._kind is TargetKind.force_single:
             return '単体※'
         elif self._kind is TargetKind.multiple:
-            return f'{self._num}体'
+            return mojimoji.han_to_zen(f'{self._num}体')
         elif self._kind is TargetKind.multiple_sl:
-            return 'SL体'
+            return 'ＳＬ体'
         elif self._kind is TargetKind.engage:
             return '範囲'
         elif self._kind is TargetKind.engage_selectable:
@@ -96,7 +97,7 @@ class Target:
             return '十字（選択）'
         else:
             assert self._kind is TargetKind.string
-            return self._string
+            return mojimoji.han_to_zen(self._string)
 
     @staticmethod
     def from_text(text: str) -> Target:

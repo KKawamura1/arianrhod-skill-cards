@@ -23,7 +23,8 @@ flavor_regex = re.compile(
 )
 symbol_set = {':', '：', '.', '。', ',', '、', '(', '（', ')', '）',
               '[', ']', '「', '」', '［', '］', '{', '}', '｛', '｝', '<', '>',
-              '＜', '＞', '〈', '〉', '《', '》', '-', 'ー', '=', '＝', '+', '＋'}
+              '＜', '＞', '〈', '〉', '《', '》', '-', 'ー', '=', '＝',
+              '+', '＋', '*', '＊', '×'}
 symbols = re.escape(''.join(list(symbol_set)))
 d_bracket_regex_before = re.compile(
     r'(?P<before>[^\s' + symbols + r'])(?P<text>《.+?》)')
@@ -103,7 +104,9 @@ def unify_effect(text: str) -> str:
         text = text.replace(o, target)
 
     # Hankaku -> Zenkaku
-    text = mojimoji.han_to_zen(text, digit=False)
+    text = mojimoji.han_to_zen(text.upper())
+
+    # この《スキル》による -> この 《スキル》 による
     while True:
         match = d_bracket_regex_before.search(text)
         if match is None:
@@ -116,6 +119,7 @@ def unify_effect(text: str) -> str:
             break
         text = (text[: match.start()] + match.group('text')
                 + ' ' + match.group('after') + text[match.end():])
+
     return text
 
 

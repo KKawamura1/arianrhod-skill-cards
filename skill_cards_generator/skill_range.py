@@ -88,7 +88,7 @@ class SkillRange:
             assert self._value is not None
             if self._unit == RangeUnit.m and self._value == 0:
                 return '至近'
-            return str(self._value) + str(self._unit)
+            return mojimoji.han_to_zen(str(self._value) + str(self._unit))
         else:
             assert self._kind is SkillRangeKind.string
             assert self._string is not None

@@ -4,6 +4,7 @@ from .skill_range import SkillRange
 from .judge import Judge
 from .classifier import Classifier
 from .target import Target
+from .cost import Cost
 
 
 @dataclass
@@ -15,7 +16,7 @@ class Skill:
     judge: Judge
     target: Target
     skill_range: SkillRange
-    cost: Optional[int]
+    cost: Cost
     usage_limitation: Optional[str]
     effect: str
     skill_class: Optional[Classifier] = field(default=None)

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import mojimoji
 from .normalized_check import normalize_and_compare
 
 
@@ -16,11 +17,11 @@ class Cost:
         if self._val == 0 or self._is_fate:
             return 'ー'
         else:
-            return str(self._val)
+            return mojimoji.han_to_zen(str(self._val))
 
     def as_effect(self) -> str:
         if self._is_fate:
-            return f'フェイトを{self._val}点消費。'
+            return mojimoji.han_to_zen(f'フェイトを{self._val}点消費。')
         return ''
 
     @staticmethod
