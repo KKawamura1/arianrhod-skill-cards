@@ -16,6 +16,8 @@ skill_regex = re.compile(
     r'^《([^》/]+)》\s*([^\s/]+)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s]*)\s*$')
 skill_area_begin_regex = re.compile(r'^■スキル■$', re.MULTILINE)
 skill_area_end_regex = re.compile(r'^■コネクション■$', re.MULTILINE)
+critical_regex = re.compile(
+    r'(cri?t?|critic(al)?|crl|クリ((ティ)?カル)?)([:>：＞〉→]|->|=>)\s*(?P<text>.+?)[。\n$]')
 
 replace_text_slash = '___SLASH___'
 
@@ -76,16 +78,25 @@ def unify_limitation(limitation: str) -> Optional[str]:
     return '、'.join(results)
 
 
-def split_classifier_from_effect(text: str) -> Tuple[Optional[Classifier], str]:
+def split_effect(
+    text: str
+) -> Tuple[Optional[Classifier], str, Optional[str]]:
+    classifier: Optional[Classifier] = None
+    critical_effect: Optional[str] = None
     delimiter_index = text.find('。')
     if delimiter_index != -1:
         candidate = text[:delimiter_index]
         classifier = Classifier.from_text(candidate)
         if classifier is not None:
             if len(text) <= delimiter_index + 1:
-                return classifier, ''
-            return classifier, text[delimiter_index + 1:]
-    return None, text
+                text = ''
+            else:
+                text = text[delimiter_index + 1:]
+    match = critical_regex.search(text)
+    if match is not None:
+        critical_effect = match.group('text')
+        text = text[: match.start()] + text[match.end():]
+    return classifier, text, critical_effect
 
 
 def make_skill_from_text(text: str) -> Optional[Skill]:
@@ -119,7 +130,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
         except ValueError:
             pass
     limitation = unify_limitation(limitation)
-    classifier, effect = split_classifier_from_effect(match.group(9))
+    classifier, effect, critical = split_effect(match.group(9))
 
     effect = cost.as_effect() + effect
     if difficulty is not None:
@@ -136,6 +147,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
         usage_limitation=limitation,
         skill_class=classifier,
         effect=effect,
+        critical=critical,
         level_above=level_above
     )
 
