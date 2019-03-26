@@ -2,6 +2,7 @@ from .skill import Skill
 from .skill_range import SkillRange, SkillRangeKind
 from typing import Sequence
 from yattag import Doc, indent
+from pathlib import Path
 import mojimoji
 
 
@@ -10,6 +11,16 @@ num_in_a_page = 9
 
 def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool, large: bool) -> str:
     """Generate html file from given skills."""
+
+    root_path = (Path(__file__) / '../../css/').resolve()
+    common_css_path = root_path / 'common.css'
+    additional_css_path = root_path / 'skill_book.css'
+    if is_sleeve_mode:
+        additional_css_path = root_path / 'sleeve.css'
+    css = ''
+    for path in [common_css_path, additional_css_path]:
+        with path.open('r') as f:
+            css += f.read() + '\n'
 
     doc, tag, text, line = Doc().ttl()
     stag = doc.stag
@@ -20,12 +31,8 @@ def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool, large: bool) ->
             line('title', 'Arianrhod Skill Cards')
             stag('meta', name='viewport',
                  content='width=device-width, initial-scale=1')
-            stag('link', rel='stylesheet', type='text/css', href='common.css')
-            if is_sleeve_mode:
-                css_name = 'sleeve.css'
-            else:
-                css_name = 'skill_book.css'
-            stag('link', rel='stylesheet', type='text/css', href=css_name)
+            with tag('style', type='text/css'):
+                text(css)
         with tag('body'):
             for skill_id in range(0, len(skills), num_in_a_page):
                 with tag('div', klass='cards-container'):
