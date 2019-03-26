@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import enum
 from typing import List, Tuple, Set
-from .normalized_check import normalize_and_check
+from .normalized_check import normalize_and_check, normalize_and_compare
 
 
 class TargetKind(enum.Enum):
@@ -10,6 +10,7 @@ class TargetKind(enum.Enum):
     single = enum.auto()
     force_single = enum.auto()
     multiple = enum.auto()
+    multiple_sl = enum.auto()
     engage = enum.auto()
     engage_selectable = enum.auto()
     field = enum.auto()
@@ -56,6 +57,8 @@ class Target:
             return '単体※'
         elif self._kind is TargetKind.multiple:
             return f'{self._num}体'
+        elif self._kind is TargetKind.multiple_sl:
+            return 'SL体'
         elif self._kind is TargetKind.engage:
             return '範囲'
         elif self._kind is TargetKind.engage_selectable:
@@ -79,4 +82,6 @@ class Target:
             num = None
         if num:
             return Target(TargetKind.multiple, num)
+        if normalize_and_compare(text, 'sl'):
+            return Target(TargetKind.multiple_sl)
         return Target(TargetKind.myself)
