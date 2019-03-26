@@ -3,7 +3,7 @@ from __future__ import annotations
 import enum
 from typing import Sequence, Optional, List, Tuple, Set
 from .element import Element
-from .normalized_check import normalize_and_check
+from .normalized_check import normalize_and_check, normalize_and_compare
 
 
 class ClassifierKind(enum.Enum):
@@ -15,9 +15,9 @@ class ClassifierKind(enum.Enum):
     string = enum.auto()
 
 
+magic_set = {'魔', '魔術', 'spell', 'spl', 'sp', 'magic', 'mag', 'mg'}
 unify_classifier_table: List[Tuple[ClassifierKind, Set[str]]] = [
-    (ClassifierKind.spell, {'魔', '魔術', 'spell', 'spl', 'sp',
-                            'magic', 'mag', 'mg'}),
+    (ClassifierKind.spell, magic_set),
     (ClassifierKind.song, {'呪', '歌', '呪歌', 'song', 'sg'}),
     (ClassifierKind.alchemy, {'錬', '錬金', '錬金術', 'alchemy',
                               'alc', 'ac', 'acm'}),
@@ -27,7 +27,7 @@ unify_classifier_table: List[Tuple[ClassifierKind, Set[str]]] = [
 ]
 
 ignored_symbols = {',', '.', '<', '〈', '《', '[', '{', '「', '【', '『',
-                   '>', '〉', '》', ']', '}', '」', '】', '』'}
+                   '>', '〉', '》', ']', '}', '」', '】', '』', '/'}
 
 
 class Classifier:
@@ -70,18 +70,26 @@ class Classifier:
         kind = normalize_and_check(text, unify_classifier_table)
         if kind is not None:
             return Classifier(kind)
-        if text[:2] == '魔術':
-            elements: List[Element] = []
-            for char in text[2:]:
-                symbol = normalize_and_check(
-                    char, [(smb, set([smb])) for smb in ignored_symbols])
-                if symbol is not None:
-                    continue
-                elem = Element.from_text(char)
-                if elem is not None:
-                    elements.append(elem)
-                    continue
-                return None
-            if elements:
-                return Classifier(ClassifierKind.spell, elements)
-        return None
+        magic_specifiers = sorted(list(magic_set),
+                                  key=lambda x: len(x), reverse=True)
+        for magic_specifier in magic_specifiers:
+            spec_size = len(magic_specifier)
+            if (len(text) >= spec_size and
+                    normalize_and_compare(text[:spec_size], magic_specifier)):
+                remain = text[spec_size:]
+                break
+        else:
+            return None
+        elements: List[Element] = []
+        for char in remain:
+            symbol = normalize_and_check(
+                char, [(smb, set([smb])) for smb in ignored_symbols])
+            if symbol is not None:
+                continue
+            elem = Element.from_text(char)
+            if elem is not None:
+                elements.append(elem)
+                continue
+            return None
+        if elements:
+            return Classifier(ClassifierKind.spell, elements)
