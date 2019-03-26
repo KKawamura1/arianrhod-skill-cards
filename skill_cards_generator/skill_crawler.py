@@ -7,6 +7,7 @@ from .skill_range import SkillRange
 from .judge import Judge
 from .html_generator import generate_html
 from .classifier import Classifier
+from .target import Target
 
 
 skill_regex = re.compile(
@@ -50,22 +51,26 @@ def unify_timing(timing: str) -> str:
 
 
 def unify_limitation(limitation: str) -> Optional[str]:
-    def unify_limitation_with_one_word(word: str) -> str:
+    def unify_limitation_with_one_word(word: str) -> Optional[str]:
         slash_separated = word.split('/')
         if len(slash_separated) == 2:
             return f'{unify_keyword(slash_separated[1])}{slash_separated[0]}回'
+        if word in {'', '-', 'ー'}:
+            return None
         return word
 
     limitation_str = limitation.replace(replace_text_slash, '/')
-    result = []
+    results = []
     for limitation_spaced in limitation_str.split():
         for limitation_sep in limitation_spaced.split(','):
             if len(limitation_sep) == 0:
                 continue
-            result.append(unify_limitation_with_one_word(limitation_sep))
-    if len(result) == 0:
+            result = unify_limitation_with_one_word(limitation_sep)
+            if result:
+                results.append(result)
+    if len(results) == 0:
         return None
-    return '、'.join(result)
+    return '、'.join(results)
 
 
 def split_classifier_from_effect(text: str) -> Tuple[Optional[Classifier], str]:
@@ -98,7 +103,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
         sl -= 5
     timing = unify_timing(match.group(3))
     judge = Judge.from_text(match.group(4))
-    target = match.group(5)
+    target = Target.from_text(match.group(5))
     skill_range_str = match.group(6)
     skill_range = SkillRange.from_text(skill_range_str)
     cost_str = match.group(7)

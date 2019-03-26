@@ -65,7 +65,7 @@ def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool) -> str:
                                 line('p', skill.timing, klass='timing')
                                 with tag('div', klass='inner-horizontal-box'):
                                     line('p', str(skill.judge), klass='judge')
-                                    line('p', skill.target, klass='target')
+                                    line('p', str(skill.target), klass='target')
                                 with tag('div', klass='inner-horizontal-box'):
                                     line('p', str(skill.skill_range),
                                          klass='effect-range')

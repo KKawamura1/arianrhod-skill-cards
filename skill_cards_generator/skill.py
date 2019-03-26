@@ -3,6 +3,7 @@ from typing import Optional
 from .skill_range import SkillRange
 from .judge import Judge
 from .classifier import Classifier
+from .target import Target
 
 
 @dataclass
@@ -12,7 +13,7 @@ class Skill:
     name: str
     timing: str
     judge: Judge
-    target: str
+    target: Target
     skill_range: SkillRange
     cost: Optional[int]
     usage_limitation: Optional[str]
