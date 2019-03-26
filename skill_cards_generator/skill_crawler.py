@@ -75,6 +75,18 @@ def unify_limitation(limitation: str) -> Optional[str]:
     return '、'.join(results)
 
 
+def unify_cost(cost_candidate: str) -> Optional[int]:
+    # TODO: fate 1
+    if len(cost_candidate) == 0:
+        cost = None
+    else:
+        try:
+            cost = int(cost_candidate)
+        except ValueError:
+            cost = None
+    return cost
+
+
 def split_classifier_from_effect(text: str) -> Tuple[Optional[Classifier], str]:
     delimiter_index = text.find('。')
     if delimiter_index != -1:
@@ -107,14 +119,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
     judge, difficulty = Judge.from_text(match.group(4))
     target = Target.from_text(match.group(5))
     skill_range = SkillRange.from_text(match.group(6))
-    cost_str = match.group(7)
-    if len(cost_str) == 0:
-        cost = None
-    else:
-        try:
-            cost = int(cost_str)
-        except ValueError:
-            cost = None
+    cost = unify_cost(match.group(7))
     limitation = match.group(8)
     level_above = None
     if len(limitation) != 0:
