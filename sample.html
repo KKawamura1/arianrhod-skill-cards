@@ -1,121 +1,323 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Arianrhod Skill Cards</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type="text/css">body {
+    font-family: "Microsoft Sans serif", sans-serif;
+    letter-spacing: -0.1mm;
+    font-feature-settings: "palt";
+    -webkit-print-color-adjust: exact;
+}
 
-<head>
-  <meta charset="utf-8">
-  <title>Arianrhod Skill Cards</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="skill_book.css">
-</head>
+div {
+    margin: 0mm;
+    padding: 0mm;
+    box-sizing: border-box;
+}
 
-<body>
-  <div class="cards-container">
-    <div class="card-outline-box">
-      <div class="card-title-box">
-        <h2 class="skill-name">
-          ゲイルスラッシュ
-        </h2>
+p {
+    margin: 0mm;
+    padding: 0mm;
+    margin-block-start: 0mm;
+    margin-block-end: 0.4mm;
+    text-align: justify;
+    text-justify: inter-ideograph;
+}
+
+.cards-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding-top: 39.5mm;
+    width: 364mm;
+    padding-left: 28mm;
+    page-break-after: always;
+}
+
+.card-title-box {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+}
+
+.card-border {
+    width: 100%;
+    background: linear-gradient(to bottom, gainsboro, white) !important;
+}
+
+.card-title-box h3.skill-class,
+.card-title-box h2.skill-name {
+    margin-block-start: 0mm;
+    margin-block-end: 0mm;
+    margin-inline-start: 0mm;
+    margin-inline-end: 0mm;
+}
+
+.card-title-box h3.skill-class,
+.card-title-box h2.skill-name {
+    font-family: 'M+ P Type-1 (general-j) Bold', 'M+ P Type-1 (basic latin) Bold';
+    /*'ヒラギノ角ゴシック', 'Hiragino Sans', sans-serif;*/
+    font-weight: bold;
+}
+
+.card-title-box h3.skill-class {
+    font-size: 5.2mm;
+    margin-bottom: 0.8mm;
+    margin-right: 0.2mm;
+}
+
+.card-title-box h2.skill-name {
+    font-size: 7.4mm;
+    flex: 1;
+}
+
+.card-main-box {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: stretch;
+}
+
+.inner-horizontal-box {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.inner-horizontal-box p {
+    width: 50%;
+}
+
+p.timing {
+    letter-spacing: -0.2mm;
+}
+
+p.timing::before {
+    content: "タイミング：";
+    font-weight: bold;
+}
+
+p.judge::before {
+    content: "判定：";
+    font-weight: bold;
+}
+
+p.target::before {
+    content: "対象：";
+    font-weight: bold;
+}
+
+p.effect-range::before {
+    content: "射程：";
+    font-weight: bold;
+}
+
+p.skill-cost::before {
+    content: "コスト：";
+    font-weight: bold;
+}
+
+p.skill-level-bound::before {
+    content: "ＳＬ上限：";
+    font-weight: bold;
+}
+
+p.skill-level-now::before {
+    content: "ＳＬ：";
+    font-weight: bold;
+}
+
+p.limitation::before {
+    content: "使用条件：";
+    font-weight: bold;
+}
+
+p.effect::before {
+    content: "効果：";
+    font-weight: bold;
+}
+
+p.critical::before {
+    content: "クリティカル：";
+    font-weight: bold;
+}
+
+p.flavor::before {
+    content: "　";
+    font-weight: bold;
+}
+
+@page {
+    size: B4 portrait;
+}
+body {
+    font-size: 4.5mm;
+}
+
+.cards-container {
+    padding-top: 0mm;
+    width: 297mm;
+    padding-left: 0mm;
+}
+
+.card-outline-box {
+    width: 96.0mm;
+    margin-top: 0mm;
+    margin-bottom: 0mm;
+    margin-right: 0mm;
+    margin-left: 0mm;
+    background-color: #202020;
+    border-radius: 4.0mm;
+    padding: 5mm;
+}
+
+.card-title-box,
+.card-main-box,
+.card-border {
+    width: 100%;
+    padding-left: 5.0mm;
+    padding-right: 5.0mm;
+}
+
+.card-title-box {
+    height: 14.5mm;
+    margin-bottom: 0mm;
+    background-color: gainsboro !important;
+    padding-top: 4.0mm;
+    padding-bottom: 0.5mm;
+}
+
+.card-border {
+    height: 3.0mm;
+}
+
+.card-main-box {
+    height: 108.5mm;
+    margin-top: 0mm;
+    padding-top: 3.0mm;
+    background-color: white !important;
+}
+</style>
+  </head>
+  <body>
+    <div class="cards-container">
+      <div class="card-outline-box">
+        <div class="card-title-box">
+          <h3 class="skill-class">魔術〈光／闇〉</h3>
+          <h2 class="skill-name" style="font-size: 6.0114285714285725mm; letter-spacing: -0.3mm;">スキルタイトル</h2>
+        </div>
+        <div class="card-border"></div>
+        <div class="card-main-box">
+          <p class="timing">セットアッププロセス</p>
+          <div class="inner-horizontal-box">
+            <p class="judge">呪歌判定</p>
+            <p class="target">３体</p>
+          </div>
+          <div class="inner-horizontal-box">
+            <p class="effect-range">５ｓｑ</p>
+            <p class="skill-cost">ー</p>
+          </div>
+          <p class="skill-level-now">４</p>
+          <p class="limitation">シナリオＳＬ回</p>
+          <p class="effect">フェイトを３点消費。このスキルの効果は自由に書いてよい。</p>
+          <p class="critical">コスト0</p>
+          <p class="flavor">フレーバーテキストを書いてもよい。</p>
+        </div>
       </div>
-      <div class="card-border"></div>
-      <div class="card-main-box">
-        <p class="timing">メジャーアクション</p>
-        <div class="inner-horizontal-box">
-          <p class="judge">自動成功</p>
-          <p class="target">自身</p>
+      <div class="card-outline-box">
+        <div class="card-title-box">
+          <h2 class="skill-name">ゲイルスラッシュ</h2>
         </div>
-        <div class="inner-horizontal-box">
-          <p class="effect-range">ー</p>
-          <p class="skill-cost">15</p>
+        <div class="card-border"></div>
+        <div class="card-main-box">
+          <p class="timing">メジャーアクション</p>
+          <div class="inner-horizontal-box">
+            <p class="judge">自動成功</p>
+            <p class="target">自身</p>
+          </div>
+          <div class="inner-horizontal-box">
+            <p class="effect-range">ー</p>
+            <p class="skill-cost">１５</p>
+          </div>
+          <p class="skill-level-now">３</p>
+          <p class="limitation">シーンＳＬ回</p>
+          <p class="effect">《ワイドアタック》 による白兵攻撃を２回行なう。この 《ワイドアタック》 はコストを消費しない。同じ対象に２回攻撃しても、別々の対象を攻撃してもよい。</p>
+          <p class="flavor">疾風のごとき素早さで、複数の対象を連続して攻撃するスキル。</p>
         </div>
-        <p class="skill-level-bound">3</p>
-        <p class="limitation">シーンＳＬ回</p>
-        <p class="effect">《ワイドアタック》 による白兵攻撃を 2 回行なう。この 《ワイドアタック》 はコストを消費しない。同じ対象に 2 回攻撃しても、別々の対象を攻撃してもよい。</p>
-        <p class="flavor">疾風のごとき素早さで、複数の対象を連続して攻撃するスキル。</p>
+      </div>
+      <div class="card-outline-box">
+        <div class="card-title-box">
+          <h2 class="skill-name">コンストレイン</h2>
+        </div>
+        <div class="card-border"></div>
+        <div class="card-main-box">
+          <p class="timing">メジャーアクション</p>
+          <div class="inner-horizontal-box">
+            <p class="judge">命中判定</p>
+            <p class="target">単体</p>
+          </div>
+          <div class="inner-horizontal-box">
+            <p class="effect-range">武器</p>
+            <p class="skill-cost">７</p>
+          </div>
+          <p class="skill-level-now">１</p>
+          <p class="limitation">ー</p>
+          <p class="effect">武器攻撃を行なう。その攻撃で対象に１点でもダメージを与えた場合、対象が行なう回避判定に－２Ｄする。この効果はラウンド終了まで持続する。</p>
+          <p class="critical">ダイスロール増加</p>
+          <p class="flavor">相手の動きを阻害するように攻撃するスキル。脚を傷つける、視界を塞ぐなどにより、攻撃をよけにくいようにするのだ。</p>
+        </div>
+      </div>
+      <div class="card-outline-box">
+        <div class="card-title-box">
+          <h3 class="skill-class">魔術〈水〉</h3>
+          <h2 class="skill-name">コキュートス</h2>
+        </div>
+        <div class="card-border"></div>
+        <div class="card-main-box">
+          <p class="timing">メジャーアクション</p>
+          <div class="inner-horizontal-box">
+            <p class="judge">魔術判定</p>
+            <p class="target">単体</p>
+          </div>
+          <div class="inner-horizontal-box">
+            <p class="effect-range">２０ｍ</p>
+            <p class="skill-cost">１２</p>
+          </div>
+          <p class="skill-level-now">１</p>
+          <p class="limitation">ー</p>
+          <p class="effect">《ウォータースピア》 １で取得可能。対象に魔法攻撃を行なう。その攻撃のダメージは［２Ｄ＋２０］（〈水〉属性の魔法ダメージ）となる。また、その攻撃で対象に１点でもＨＰダメージを与えた場合、［放心］を与える。</p>
+          <p class="critical">ダイスロール増加</p>
+          <p class="flavor">〈水〉の精霊の力により、極低温の冷気で攻撃する魔術である。</p>
+        </div>
+      </div>
+      <div class="card-outline-box">
+        <div class="card-title-box">
+          <h3 class="skill-class">魔術〈水／光〉</h3>
+          <h2 class="skill-name" style="font-size: 5.630000000000001mm; letter-spacing: -0.3mm;">フロストプリズム</h2>
+        </div>
+        <div class="card-border"></div>
+        <div class="card-main-box">
+          <p class="timing">メジャーアクション</p>
+          <div class="inner-horizontal-box">
+            <p class="judge">魔術判定</p>
+            <p class="target">単体</p>
+          </div>
+          <div class="inner-horizontal-box">
+            <p class="effect-range">３０ｍ</p>
+            <p class="skill-cost">１８</p>
+          </div>
+          <p class="skill-level-now">５</p>
+          <p class="limitation">ー</p>
+          <p class="effect">《マスターマジック》 ５ 《コキュートス》 １ 《セレスチャルスター》 １で取得可能。対象に魔法攻撃を行なう。その攻撃のダメージは［（ＳＬ＋１）Ｄ＋５０］（〈水／光〉属性の魔法ダメージ）となる。また、その攻撃で対象に１点でもＨＰダメージを与えた場合、［放心］を与える。</p>
+          <p class="critical">ダイスロール増加</p>
+          <p class="flavor">結晶化した光が乱舞する魔術。</p>
+        </div>
       </div>
     </div>
-    <div class="card-outline-box">
-      <div class="card-title-box">
-        <h2 class="skill-name">
-          コンストレイン
-        </h2>
-      </div>
-      <div class="card-border"></div>
-      <div class="card-main-box">
-        <p class="timing">メジャーアクション</p>
-        <div class="inner-horizontal-box">
-          <p class="judge">命中判定</p>
-          <p class="target">単体</p>
-        </div>
-        <div class="inner-horizontal-box">
-          <p class="effect-range">武器</p>
-          <p class="skill-cost">7</p>
-        </div>
-        <p class="skill-level-bound">1</p>
-        <p class="limitation">ー</p>
-        <p class="effect">武器攻撃を行なう。その攻撃で対象に 1 点でもダメージを与えた場合、対象が行なう回避判定にー2Ｄする。この効果はラウンド終了まで持続する。</p>
-        <p class="critical">ダイスロール増加</p>
-        <p class="flavor">相手の動きを阻害するように攻撃するスキル。脚を傷つける、視界を塞ぐなどにより、攻撃をよけにくいようにするのだ。</p>
-      </div>
-    </div>
-    <div class="card-outline-box">
-      <div class="card-title-box">
-        <h3 class="skill-class">
-          魔術〈水〉
-        </h3>
-        <h2 class="skill-name">
-          コキュートス
-        </h2>
-      </div>
-      <div class="card-border"></div>
-      <div class="card-main-box">
-        <p class="timing">メジャーアクション</p>
-        <div class="inner-horizontal-box">
-          <p class="judge">魔術判定</p>
-          <p class="target">単体</p>
-        </div>
-        <div class="inner-horizontal-box">
-          <p class="effect-range">20 m </p>
-          <p class="skill-cost">12</p>
-        </div>
-        <p class="skill-level-bound">1</p>
-        <p class="limitation">ー</p>
-        <p class="effect">《ウォータースピア》 1 で取得可能。対象に魔法攻撃を行なう。その攻撃のダメージは
-          ［2Ｄ＋20］（〈水〉属性の魔法ダメージ）となる。また、その攻撃で対象に 1 点でもHPダメージを与えた場合、［放心］を与える。</p>
-        <p class="critical">ダイスロール増加</p>
-        <p class="flavor">〈水〉の精霊の力により、極低温の冷気で攻撃する魔術である。</p>
-      </div>
-    </div>
-
-    <div class="card-outline-box">
-      <div class="card-title-box">
-        <h3 class="skill-class">
-          魔術〈水／光〉
-        </h3>
-        <h2 class="skill-name skill-name-long" style="font-size: 6.9mm; letter-spacing: -0.1mm;">
-          フロストプリズム
-        </h2>
-      </div>
-      <div class="card-border"></div>
-      <div class="card-main-box">
-        <p class="timing">メジャーアクション</p>
-        <div class="inner-horizontal-box">
-          <p class="judge">魔術判定</p>
-          <p class="target">単体</p>
-        </div>
-        <div class="inner-horizontal-box">
-          <p class="effect-range">30 m </p>
-          <p class="skill-cost">18</p>
-        </div>
-        <p class="skill-level-bound">5</p>
-        <p class="limitation">ー</p>
-        <p class="effect">《マスターマジック》 5 《コキュートス》 1 《セレスチャルスター》 1 で取得可能。対象に魔法攻撃を行なう。その攻撃のダメージは
-          ［（ＳＬ＋1）Ｄ＋50］（〈水／光〉属性の魔法ダメージ）となる。また、その攻撃で対象に 1 点でもHPダメージを与えた場合、［放心］を与える。</p>
-        <p class="critical">ダイスロール増加</p>
-        <p class="flavor">結晶化した光が乱舞する魔術。</p>
-      </div>
-    </div>
-  </div>
-</body>
-
-
+  </body>
 </html>
