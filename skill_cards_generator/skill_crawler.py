@@ -11,9 +11,9 @@ from .target import Target
 
 
 skill_regex = re.compile(
-    r'^《([^》/]+)》\s*([^\s/]+)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s]*)\s*$', re.MULTILINE)
-skill_area_begin_regex = re.compile(r'^■スキル■\s*$', re.MULTILINE)
-skill_area_end_regex = re.compile(r'^■コネクション■\s*$', re.MULTILINE)
+    r'^《([^》/]+)》\s*([^\s/]+)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s]*)\s*$')
+skill_area_begin_regex = re.compile(r'^■スキル■$', re.MULTILINE)
+skill_area_end_regex = re.compile(r'^■コネクション■$', re.MULTILINE)
 
 replace_text_slash = '___SLASH___'
 
@@ -143,14 +143,14 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
 
 def make_skills_from_charasheet(sheet: str) -> List[Skill]:
     # If it seems a entire sheet, drop others
-    match_begin = skill_area_begin_regex.match(sheet)
-    match_end = skill_area_end_regex.match(sheet)
+    match_begin = skill_area_begin_regex.search(sheet)
+    match_end = skill_area_end_regex.search(sheet)
     if match_begin is not None:
-        begin = match_begin.end
+        begin = match_begin.end()
     else:
         begin = 0
     if match_end is not None:
-        end = match_end.start
+        end = match_end.start()
     else:
         end = len(sheet)
     sheet = sheet[begin:end]
