@@ -180,7 +180,7 @@ def split_effect(
     return classifier, unify_effect(text), critical_effect, flavor_text
 
 
-def make_skill_from_text(text: str) -> Optional[Skill]:
+def make_skill_from_text(text: str, sl_as_limit: bool) -> Optional[Skill]:
     match = skill_regex.fullmatch(text)
     if match is None:
         return None
@@ -203,7 +203,10 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
     cost = Cost.from_text(match.group(7))
     limitation = match.group(8)
     level_above = None
-    if len(limitation) != 0:
+    if sl_as_limit:
+        level_above = sl
+        sl = None
+    elif len(limitation) != 0:
         try:
             # If there is only a number in limitation area, we treat it as a sl above limitation
             level_above = int(limitation)
@@ -235,7 +238,7 @@ def make_skill_from_text(text: str) -> Optional[Skill]:
     )
 
 
-def make_skills_from_charasheet(sheet: str) -> List[Skill]:
+def make_skills_from_charasheet(sheet: str, sl_as_limit: bool) -> List[Skill]:
     # If it seems a entire sheet, drop others
     match_begin = skill_area_begin_regex.search(sheet)
     match_end = skill_area_end_regex.search(sheet)
@@ -263,7 +266,7 @@ def make_skills_from_charasheet(sheet: str) -> List[Skill]:
     # Check lines
     skills = []
     for line in sheet.split('\n'):
-        skill = make_skill_from_text(line)
+        skill = make_skill_from_text(line, sl_as_limit)
         if skill is not None:
             skills.append(skill)
 
@@ -276,7 +279,7 @@ def make_skills_from_charasheet(sheet: str) -> List[Skill]:
     return skills
 
 
-def main(is_sleeve_mode: bool, large: bool) -> None:
+def main(is_sleeve_mode: bool, large: bool, sl_as_limit: bool) -> None:
     input_text = stdin.read()
-    skills = make_skills_from_charasheet(input_text)
+    skills = make_skills_from_charasheet(input_text, sl_as_limit)
     print(generate_html(skills, is_sleeve_mode, large))
