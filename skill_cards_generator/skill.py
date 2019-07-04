@@ -5,13 +5,14 @@ from .judge import Judge
 from .classifier import Classifier
 from .target import Target
 from .cost import Cost
+from .ruby_string import RubyString
 
 
 @dataclass
 class Skill:
     """Skill object in Arianrhod."""
 
-    name: str
+    name: RubyString
     timing: str
     judge: Judge
     target: Target

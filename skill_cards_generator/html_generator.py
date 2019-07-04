@@ -45,7 +45,7 @@ def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool, large: bool) ->
                                         str(skill.skill_class))
                                 else:
                                     class_name_len = 0
-                                skill_name_len = len(skill.name)
+                                skill_name_len = len(skill.name.get_base())
                                 maximum_width = 80
                                 if is_sleeve_mode:
                                     maximum_width = 65
@@ -65,7 +65,7 @@ def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool, large: bool) ->
                                          klass='skill-class')
                                 with tag('h2', klass='skill-name'):
                                     doc.attr(style=f'font-size: {skill_size}mm;')
-                                    text(skill.name)
+                                    doc.asis(skill.name.as_html())
                             line('div', '', klass='card-border')
                             with tag('div', klass='card-main-box'):
                                 line('p', skill.timing, klass='timing')

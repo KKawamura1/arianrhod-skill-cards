@@ -9,6 +9,7 @@ from .html_generator import generate_html
 from .classifier import Classifier
 from .target import Target
 from .cost import Cost
+from .ruby_string import RubyString
 from .normalized_check import normalize_and_check_with_default
 
 
@@ -184,11 +185,12 @@ def make_skill_from_text(text: str, sl_as_limit: bool) -> Optional[Skill]:
     match = skill_regex.fullmatch(text)
     if match is None:
         return None
-    name = match.group(1)
-    if name in ('スキル名', '一般スキル'):
+    name_raw_str = match.group(1)
+    if name_raw_str in ('スキル名', '一般スキル'):
         return None
-    elif name[0] == name[-1] == '■':
+    elif name_raw_str[0] == name_raw_str[-1] == '■':
         return None
+    name = RubyString.from_text(name_raw_str)
     sl_str = match.group(2)
     try:
         sl = int(sl_str)
