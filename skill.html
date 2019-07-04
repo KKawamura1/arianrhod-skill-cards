@@ -1,4 +1,10 @@
-body {
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Arianrhod Skill Cards</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type="text/css">body {
     font-family: "Microsoft Sans serif", sans-serif;
     letter-spacing: -0.1mm;
     font-feature-settings: "palt";
@@ -147,3 +153,85 @@ p.flavor::before {
 @page {
     size: B4 portrait;
 }
+body {
+    font-size: 4.6mm;
+}
+
+.cards-container {
+    padding-top: 39.5mm;
+    width: 364mm;
+    padding-left: 28mm;
+}
+
+.card-outline-box {
+    width: 94.0mm;
+    margin-top: 7.5mm;
+    margin-bottom: 7.5mm;
+    margin-right: 3.5mm;
+    margin-left: 3.5mm;
+}
+
+.card-title-box,
+.card-main-box,
+.card-border {
+    width: 100%;
+    border-style: solid;
+    border-width: 0.6mm;
+    padding-left: 5.0mm;
+    padding-right: 5.0mm;
+}
+
+.card-title-box {
+    height: 19.5mm;
+    border-top-left-radius: 6.0mm;
+    border-top-right-radius: 6.0mm;
+    border-bottom-style: none;
+    margin-bottom: 0mm;
+    background-color: gainsboro !important;
+    padding-top: 8.0mm;
+    padding-bottom: 1.5mm;
+}
+
+.card-border {
+    height: 1.0mm;
+    border-top-style: none;
+    border-bottom-style: none;
+}
+
+.card-main-box {
+    height: 113.5mm;
+    border-bottom-left-radius: 6.0mm;
+    border-bottom-right-radius: 6.0mm;
+    border-top-style: none;
+    margin-top: 0mm;
+    padding-top: 4.0mm;
+    align-content: stretch;
+}
+</style>
+  </head>
+  <body>
+    <div class="cards-container">
+      <div class="card-outline-box">
+        <div class="card-title-box">
+          <h2 class="skill-name" style="font-size: 7.2mm;">タイムマジック</h2>
+        </div>
+        <div class="card-border"></div>
+        <div class="card-main-box">
+          <p class="timing">ムーブアクション</p>
+          <div class="inner-horizontal-box">
+            <p class="judge">自動成功</p>
+            <p class="target">自身</p>
+          </div>
+          <div class="inner-horizontal-box">
+            <p class="effect-range">ー</p>
+            <p class="skill-cost">１５</p>
+          </div>
+          <p class="skill-level-now">１</p>
+          <p class="limitation">ー</p>
+          <p class="effect">「タイミング：ムーブアクション」のスキルを２つ使用できる。ムーブアクションを増やすスキルや同じスキルを使用することはできない。</p>
+          <p class="flavor">芸術的な動きで準備を行なうスキル。その素早い動きを見た人間は、まるで時が止まったかのように感じられるだろう。</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

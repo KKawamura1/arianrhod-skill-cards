@@ -48,21 +48,20 @@ def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool, large: bool) ->
                                 skill_name_len = len(skill.name.get_base())
                                 maximum_width = 80
                                 if is_sleeve_mode:
-                                    maximum_width = 65
+                                    maximum_width = 70
                                 if large:
                                     maximum_width = int(
                                         maximum_width * 1.1)
                                 # Smallen skill name
-                                class_size = 5.0
+                                class_size = 5.2
                                 skill_size = 7.2
                                 now_width = class_size * class_name_len + skill_size * skill_name_len
                                 coefficient = min(maximum_width / now_width, 1.0)
                                 class_size *= coefficient
                                 skill_size *= coefficient
                                 if skill.skill_class is not None:
-                                    doc.attr(style=f'font-size: {class_size}mm;')
                                     line('h3', str(skill.skill_class),
-                                         klass='skill-class')
+                                         klass='skill-class', style=f'font-size: {class_size}mm;')
                                 with tag('h2', klass='skill-name'):
                                     doc.attr(style=f'font-size: {skill_size}mm;')
                                     doc.asis(skill.name.as_html())

@@ -30,7 +30,7 @@ echo "《タイムマジック》 1/ムーブ/自動成功/自身/-/15//「タ�
 <img src="sample1.png" width=250>
 
 ```
-python main.py --sleeve --large < sample.txt > skill.html
+python main.py --sleeve < sample.txt > sample_with_sleeve.html
 ```
 
 <img src="sample2.png" width=750>
