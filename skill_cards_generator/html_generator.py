@@ -39,38 +39,32 @@ def generate_html(skills: Sequence[Skill], is_sleeve_mode: bool, large: bool) ->
                     for skill in skills[skill_id:skill_id+num_in_a_page]:
                         with tag('div', klass='card-outline-box'):
                             with tag('div', klass='card-title-box'):
+                                # Name with auto-smallening
                                 if skill.skill_class is not None:
+                                    class_name_len = len(
+                                        str(skill.skill_class))
+                                else:
+                                    class_name_len = 0
+                                skill_name_len = len(skill.name)
+                                maximum_width = 80
+                                if is_sleeve_mode:
+                                    maximum_width = 65
+                                if large:
+                                    maximum_width = int(
+                                        maximum_width * 1.1)
+                                # Smallen skill name
+                                class_size = 5.0
+                                skill_size = 7.2
+                                now_width = class_size * class_name_len + skill_size * skill_name_len
+                                coefficient = min(maximum_width / now_width, 1.0)
+                                class_size *= coefficient
+                                skill_size *= coefficient
+                                if skill.skill_class is not None:
+                                    doc.attr(style=f'font-size: {class_size}mm;')
                                     line('h3', str(skill.skill_class),
                                          klass='skill-class')
-                                # Name with auto-smallening
                                 with tag('h2', klass='skill-name'):
-                                    if skill.skill_class is not None:
-                                        class_name_len = len(
-                                            str(skill.skill_class))
-                                    else:
-                                        class_name_len = 0
-                                    skill_name_len = len(skill.name)
-                                    maximum_width = 80
-                                    if is_sleeve_mode:
-                                        maximum_width = 65
-                                    if large:
-                                        maximum_width = int(
-                                            maximum_width * 1.1)
-                                    class_size = 5.2
-                                    skill_size = 7.4
-                                    if (class_size * class_name_len
-                                            + skill_size * skill_name_len
-                                            > maximum_width):
-                                        # Need to smallen
-                                        remaining_space = (maximum_width
-                                                           - class_size * class_name_len)
-                                        per_one_char = remaining_space / skill_name_len
-                                        decrease = skill_size - per_one_char
-                                        new_size = max(
-                                            skill_size - decrease * 0.6, 1.2)
-                                        spacing = max(-decrease * 0.4, -0.3)
-                                        doc.attr(style=(f'font-size: {new_size}mm; '
-                                                        f'letter-spacing: {spacing}mm;'))
+                                    doc.attr(style=f'font-size: {skill_size}mm;')
                                     text(skill.name)
                             line('div', '', klass='card-border')
                             with tag('div', klass='card-main-box'):

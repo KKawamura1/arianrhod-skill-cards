@@ -58,13 +58,13 @@ p {
 }
 
 .card-title-box h3.skill-class {
-    font-size: 5.2mm;
+    font-size: 5.0mm;
     margin-bottom: 0.8mm;
     margin-right: 0.2mm;
 }
 
 .card-title-box h2.skill-name {
-    font-size: 7.4mm;
+    font-size: 7.2mm;
     flex: 1;
 }
 
