@@ -14,7 +14,7 @@ from .normalized_check import normalize_and_check_with_default
 
 
 skill_regex = re.compile(
-    r'^《([^》/]+)》\s*([^\s/]+)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*(.*)$')
+    r'^《([^/]+)》\s*([^《》\s/]+)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*([^\s/]*)\s*/\s*(.*)$')
 skill_area_begin_regex = re.compile(r'^■スキル■$', re.MULTILINE)
 skill_area_end_regex = re.compile(r'^■コネクション■$', re.MULTILINE)
 critical_regex = re.compile(
